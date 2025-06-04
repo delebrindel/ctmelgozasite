@@ -24,7 +24,9 @@ export function About() {
                   rel="noopener noreferrer"
                 >
                   <img
-                    className="h-15 whiteImage"
+                  height={60}
+                    width={60}
+                    className="whiteImage"
                     src={socialItem.icon}
                     alt={socialItem.alt}
                   />
