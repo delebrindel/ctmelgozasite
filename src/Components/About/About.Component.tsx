@@ -1,3 +1,5 @@
+import {} from "@heroicons/react/24/outline";
+import { SOCIAL } from "../../Global/Constants.Enum";
 
 export function About() {
   return (
@@ -13,8 +15,22 @@ export function About() {
           <h2 className="text-xl font-thin">
             A <strong>Software</strong> engineer based in <em>México</em>
           </h2>
-          <ul>
-            <li></li>
+          <ul className="flex flex-row gap-8 mt-4">
+            {SOCIAL.map((socialItem) => (
+              <li key={socialItem.alt}>
+                <a
+                  href={socialItem.link}
+                  target="_social"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    className="h-15 whiteImage"
+                    src={socialItem.icon}
+                    alt={socialItem.alt}
+                  />
+                </a>
+              </li>
+            ))}
           </ul>
         </header>
       </div>
