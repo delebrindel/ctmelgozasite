@@ -1,5 +1,5 @@
 import { DocumentArrowDownIcon } from "@heroicons/react/24/outline";
-import { WORK_EXPERIENCE } from "../../Global/Constants.Enum";
+import { WORK_EXPERIENCE } from "../../Global/Work.Enums";
 
 export function CV() {
   return (
