@@ -4,11 +4,9 @@ import {
   DisclosurePanel,
 } from "@headlessui/react";
 import {
-  Bars3Icon,
-  XMarkIcon,
-  UserIcon,
   BriefcaseIcon,
   ClipboardIcon,
+  UserIcon
 } from "@heroicons/react/24/outline";
 import { useAppStore } from "../../Global/App.Store";
 import { ROUTES } from "../../Global/Constants.Enum";
