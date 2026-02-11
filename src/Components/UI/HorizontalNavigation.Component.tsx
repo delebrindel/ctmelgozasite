@@ -10,23 +10,35 @@ const HorizontalNavigation: React.FC = () => {
   const { changeRoute, currentRoute } = useAppStore();
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full bg-blue-950 shadow-md z-50 block md:hidden">
-      <ul className="flex justify-center gap-3 items-center py-3 m-0">
-        {NAVIGATION.map((link) => (
-          <li
-            key={link.route}
-            className={classNames(
-              currentRoute === link.route
-                ? "font-bold"
-                : "font-light",
-              "text-gray-200 flex-col items-center content-center text-base w-1/3 display-flex"
-            )}
-            onClick={() => changeRoute(link.route)}
-          >
-            <figure className="w-full flex justify-center">{link.icon}</figure>
-            <p className="w-full text-center">{link.name}</p>
-          </li>
-        ))}
+    <nav className="fixed bottom-0 left-0 w-full z-50 block md:hidden backdrop-blur-md bg-term-bg/90 border-t border-term-border">
+      <ul className="flex justify-around items-center h-16 m-0 px-2">
+        {NAVIGATION.map((link) => {
+          const isActive = currentRoute === link.route;
+          return (
+            <li
+              key={link.route}
+              className={classNames(
+                isActive
+                  ? "text-neon-cyan"
+                  : "text-gray-500 hover:text-gray-300",
+                "flex-1 flex flex-col items-center justify-center h-full transition-colors duration-200 cursor-pointer active:scale-95"
+              )}
+              onClick={() => changeRoute(link.route)}
+            >
+              <figure className={`w-6 h-6 mb-1 ${isActive ? "drop-shadow-[0_0_8px_rgba(88,166,255,0.6)]" : ""}`}>
+                {link.icon}
+              </figure>
+              <p className="text-[10px] font-mono tracking-wider uppercase">
+                {link.name}
+              </p>
+              
+              {/* Active Indicator Dot */}
+              {isActive && (
+                <span className="absolute bottom-1 w-1 h-1 rounded-full bg-neon-cyan shadow-[0_0_5px_#58a6ff]"></span>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );

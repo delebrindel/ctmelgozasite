@@ -1,7 +1,5 @@
 import {
   Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
 } from "@headlessui/react";
 import {
   BriefcaseIcon,
@@ -29,70 +27,37 @@ export const Navbar = () => {
   const { currentRoute, changeRoute } = useAppStore();
 
   return (
-    <Disclosure as="nav" className="bg-gray-800 fixed top-0 left-0 w-full z-50">
+    <Disclosure as="nav" className="fixed top-0 left-0 w-full z-50 transition-all duration-300 backdrop-blur-md bg-term-bg/80 border-b border-term-border">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
-            {/* Mobile menu button*
-          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden focus:ring-inset">
-            <span className="absolute -inset-0.5" />
-            <span className="sr-only">Open main menu</span>
-            <Bars3Icon
-            aria-hidden="true"
-            className="block size-6 group-data-open:hidden"
-            />
-            <XMarkIcon
-            aria-hidden="true"
-            className="hidden size-6 group-data-open:block"
-            />
-            </DisclosureButton>
-            </div>
-            */}
-          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex shrink-0 items-center">
-              Cristóbal Torres | Web Dev
+          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-between">
+            <div className="flex shrink-0 items-center font-mono font-bold text-lg tracking-tight text-white">
+              <span className="text-neon-purple mr-2">&lt;</span>
+              Cristóbal Torres
+              <span className="text-neon-purple ml-2">/&gt;</span>
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
                 {NAVIGATION.map((item) => (
-                  <span
+                  <button
                     key={item.name}
                     onClick={() => changeRoute(item.route)}
                     className={classNames(
                       currentRoute === item.route
-                        ? "bg-gray-900 text-white"
-                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                      "rounded-md px-3 py-2 text-sm font-medium"
+                        ? "text-neon-cyan border-b-2 border-neon-cyan bg-term-card/50"
+                        : "text-gray-400 hover:text-neon-pink hover:bg-term-card/30",
+                      "rounded-t-md px-3 py-2 text-sm font-mono font-medium transition-all duration-200 ease-in-out"
                     )}
                   >
+                    <span className="mr-1 opacity-50 text-xs">0{NAVIGATION.indexOf(item) + 1}.</span>
                     {item.name}
-                  </span>
+                  </button>
                 ))}
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <DisclosurePanel className="sm:hidden">
-        <div className="space-y-1 px-2 pt-2 pb-3">
-          {NAVIGATION.map((item) => (
-            <DisclosureButton
-              key={item.name}
-              as="a"
-              className={classNames(
-                currentRoute === item.route
-                  ? "bg-gray-900 text-white"
-                  : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                "block rounded-md px-3 py-2 text-base font-medium"
-              )}
-              onClick={() => changeRoute(item.route)}
-            >
-              {item.name}
-            </DisclosureButton>
-          ))}
-        </div>
-      </DisclosurePanel>
     </Disclosure>
   );
 };
