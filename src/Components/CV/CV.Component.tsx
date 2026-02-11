@@ -1,16 +1,28 @@
 import { EXPERIENCE_DATA, CORE_SKILLS } from "../../Global/Data";
+import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 
 export function CV() {
   return (
     <main className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
       {/* Header Section */}
-      <div className="mb-16 text-center lg:text-left">
-        <h2 className="text-3xl font-mono font-bold text-white mb-4">
-          <span className="text-neon-pink">const</span> <span className="text-neon-cyan">experience</span> = <span className="text-neon-purple">['History']</span>;
-        </h2>
-        <p className="text-gray-400 max-w-2xl">
-          Senior Full Stack Web Developer with 10+ years of experience building, scaling, and maintaining production web applications for remote-first teams.
-        </p>
+      <div className="mb-16 flex flex-col lg:flex-row justify-between items-center lg:items-start gap-6">
+        <div className="text-center lg:text-left">
+          <h2 className="text-3xl font-mono font-bold text-white mb-4">
+            <span className="text-neon-pink">const</span> <span className="text-neon-cyan">experience</span> = <span className="text-neon-purple">['History']</span>;
+          </h2>
+          <p className="text-gray-400 max-w-2xl">
+            Senior Full Stack Web Developer with 10+ years of experience building, scaling, and maintaining production web applications for remote-first teams.
+          </p>
+        </div>
+        
+        <a 
+          href="/cv.pdf" 
+          download="CV_Cristobal_Torres.pdf"
+          className="flex items-center gap-2 px-4 py-2 bg-term-card border border-term-border rounded-md hover:border-neon-cyan hover:text-neon-cyan text-gray-400 transition-all duration-300 group"
+        >
+          <ArrowDownTrayIcon className="w-5 h-5 group-hover:animate-bounce" />
+          <span className="font-mono text-sm">Download PDF</span>
+        </a>
       </div>
 
       {/* Skills "Terminal" Block */}
