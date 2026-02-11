@@ -50,7 +50,7 @@ const Typewriter = () => {
 
 export function About() {
   return (
-    <main className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-0 sm:pt-16">
+    <main className="min-h-screen flex items-start justify-center px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 lg:pt-32">
       <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
         {/* Left Column: Text & Intro */}
         <div className="flex flex-col gap-4 lg:gap-6 order-2 lg:order-1 text-center lg:text-left">

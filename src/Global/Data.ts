@@ -121,8 +121,16 @@ export const PORTFOLIO_DATA: ProjectItem[] = [
     title: "Dev Portfolio V2",
     description: "The current website you are viewing. Built with a 'Narrative Terminal' aesthetic to showcase creative engineering.",
     stack: ["React", "Vite", "Tailwind v4", "Zustand"],
-    link: "https://ctmelgoza.com",
+    link: "https://ctorres.lat/",
     github: "https://github.com/delebrindel/ctmelgozasite",
     status: 'in-progress'
+  },
+  {
+    id: "photography-site",
+    title: "Photography Portfolio",
+    description: "A showcase of my photography work. Capturing moments and stories through the lens.",
+    stack: ["Photography", "Creative", "Visual Arts"],
+    link: "https://photo.ctorres.lat/",
+    status: 'completed'
   }
 ];
