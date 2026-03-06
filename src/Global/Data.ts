@@ -88,6 +88,14 @@ export interface ProjectItem {
 
 export const PORTFOLIO_DATA: ProjectItem[] = [
   {
+    id: "sanders-mantilla",
+    title: "Saanders y Mantilla Website",
+    description: "Website for a translation agency. Features multilanguage and lightweight components.",
+    stack: ["Vue", "PHP", "Microservices"],
+    link: "https://www.sandersymantilla.com/",
+    status: 'completed'
+  },
+  {
     id: "raffoom-platform",
     title: "Raffoom Website",
     description: "The main product platform for Raffoom Digital. Architected the frontend systems and internal tools that power this gaming experience.",
