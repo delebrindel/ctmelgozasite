@@ -33,7 +33,7 @@ export async function loadLocaleStrings(page = 'home'): Promise<any> {
   const c = getCookie('site_lang');
   if (c === 'es') return await resolveFor('es');
   if (c === 'en') return await resolveFor('en');
-  const nav = navigator.language && navigator.language.split('-')[0];
-  if (nav === 'es') return await resolveFor('es');
+  // Don't auto-switch the default based on the browser language — keep English as the default
+  // unless the path explicitly starts with /es or the user has an explicit cookie set.
   return await resolveFor('en');
 }
