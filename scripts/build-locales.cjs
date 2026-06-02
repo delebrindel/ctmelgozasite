@@ -32,7 +32,30 @@ async function build(){
   // Insert hreflang links
   const hreflang = `\n<link rel="alternate" hreflang="en" href="/" />\n<link rel="alternate" hreflang="es" href="/es/" />\n`;
   enHtml = enHtml.replace('</head>', hreflang + '</head>');
-  let esHtmlFinal = esHtml.replace('</head>', hreflang.replace('/es/','/') + '</head>');
+
+  // Ensure ES version has correct lang attribute and hreflang pointing to /es/
+  let esHtmlFinal = esHtml.replace('</head>', hreflang + '</head>');
+  esHtmlFinal = esHtmlFinal.replace(/<html([^>]*)lang="[^"]*"([^>]*)>/i, '<html$1lang="es"$2>');
+
+  // Remove duplicate <title> and <meta name="description"> tags if present (keep first occurrence)
+  // Keep only the first matching occurrence of a tag/match.
+  function keepFirstMatch(html, regex) {
+    const matches = html.match(regex);
+    if (!matches || matches.length <= 1) return html;
+    const first = matches[0];
+    // remove all occurrences
+    html = html.replace(regex, '');
+    // re-insert the first before </head>
+    return html.replace('</head>', first + '\n</head>');
+  }
+
+  // Title tags: <title>...</title>
+  enHtml = keepFirstMatch(enHtml, /<title[\s\S]*?<\/title>/gi);
+  esHtmlFinal = keepFirstMatch(esHtmlFinal, /<title[\s\S]*?<\/title>/gi);
+
+  // Meta description: self-closing <meta ... name="description" ...>
+  enHtml = keepFirstMatch(enHtml, /<meta[^>]*name=["']description["'][^>]*>/gi);
+  esHtmlFinal = keepFirstMatch(esHtmlFinal, /<meta[^>]*name=["']description["'][^>]*>/gi);
 
   // Write es output
   ensureDir(OUT_ES);
