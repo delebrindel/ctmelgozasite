@@ -1,0 +1,86 @@
+[
+  {
+    "id": "ecommerce-platform",
+    "locales": {
+      "en": {
+        "id": "ecommerce-platform",
+        "title": "Ecommerce Platform",
+        "idea": "A modular ecommerce platform with headless CMS, payments, and analytics to help merchants scale online.",
+        "budget": "$25,000 - $75,000",
+        "current_development": "Planning",
+        "timeframe": "3-6 months"
+      },
+      "es": {
+        "id": "ecommerce-platform",
+        "title": "Plataforma de ecommerce",
+        "idea": "Una plataforma de ecommerce modular con CMS headless, pagos y analítica para ayudar a los comerciantes a escalar online.",
+        "budget": "$25,000 - $75,000",
+        "current_development": "Planificación",
+        "timeframe": "3-6 meses"
+      }
+    }
+  },
+  {
+    "id": "landing-page",
+    "locales": {
+      "en": {
+        "id": "landing-page",
+        "title": "Landing Page",
+        "idea": "A focused marketing landing page to capture leads and present a single product or campaign with CTA and analytics.",
+        "budget": "$800 - $2,500",
+        "current_development": "None",
+        "timeframe": "1-2 weeks"
+      },
+      "es": {
+        "id": "landing-page",
+        "title": "Landing Page",
+        "idea": "Una landing page enfocada en marketing para capturar leads y presentar un producto o campaña con CTA y analítica.",
+        "budget": "$800 - $2,500",
+        "current_development": "Ninguno",
+        "timeframe": "1-2 semanas"
+      }
+    }
+  },
+  {
+    "id": "personal-website-noblog",
+    "locales": {
+      "en": {
+        "id": "personal-website-noblog",
+        "title": "Personal Website (no blog)",
+        "idea": "A clean personal portfolio website without a blog section — focused on showcasing projects, CV, and contact.",
+        "budget": "$1,500 - $4,000",
+        "current_development": "None",
+        "timeframe": "1-4 weeks"
+      },
+      "es": {
+        "id": "personal-website-noblog",
+        "title": "Sitio personal (sin blog)",
+        "idea": "Un portafolio personal limpio sin sección de blog — enfocado en mostrar proyectos, CV y contacto.",
+        "budget": "$1,500 - $4,000",
+        "current_development": "Ninguno",
+        "timeframe": "1-4 semanas"
+      }
+    }
+  },
+  {
+    "id": "fast-feedback-platform",
+    "locales": {
+      "en": {
+        "id": "fast-feedback-platform",
+        "title": "Fast Feedback Platform",
+        "idea": "A lightweight SaaS to collect rapid customer feedback and display prioritized insights to product teams.",
+        "budget": "$8,000 - $20,000",
+        "current_development": "Concept / Design",
+        "timeframe": "2-3 months"
+      },
+      "es": {
+        "id": "fast-feedback-platform",
+        "title": "Plataforma de Feedback Rápido",
+        "idea": "Un SaaS ligero para recopilar feedback rápido de clientes y mostrar insights priorizados a los equipos de producto.",
+        "budget": "$8,000 - $20,000",
+        "current_development": "Concepto / Diseño",
+        "timeframe": "2-3 meses"
+      }
+    }
+  }
+]
