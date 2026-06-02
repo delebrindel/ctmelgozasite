@@ -1,0 +1,25 @@
+{
+  "projectChat": {
+    "title": "Cuéntame sobre tu proyecto",
+    "pick": "Plantillas de proyectos",
+    "describe": "Describe tu idea",
+    "choose": "-- elegir --",
+    "placeholder": "Describe tu proyecto en unas pocas frases",
+    "analyze": "Analizar",
+    "emailPlaceholder": "tu@empresa.com",
+    "send": "Enviar al propietario",
+    "sending": "Enviando…",
+    "sent": "Enviado",
+    "success": "Gracias — recibimos tu solicitud.",
+    "privacy": "Usamos esto solo para contactarte sobre tu proyecto. Sin spam. Puedes eliminar tu lead después.",
+    "emailRequired": "Por favor proporciona un correo",
+    "summaryRequired": "Selecciona un proyecto o describe tu idea primero",
+    "budgetParseError": "Por favor proporciona un presupuesto numérico en USD (ej. $8k - $20k o 15000)",
+    "budgetLabel":"Presupuesto (USD)"
+    ,"currentDevLabel":"Desarrollo actual",
+    "currentDevHelp":"Si ya tienes algún avance en el proyecto, por favor cuéntamelo"
+    ,"timeframeLabel":"Plazo",
+    "timeframeOptions":["Menos de 1 mes","1-3 meses","3-6 meses","6+ meses","Flexible / Indeciso"]
+    ,"additionalComments":"Comentarios adicionales"
+  }
+}

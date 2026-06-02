@@ -10,6 +10,7 @@ type TierProps = {
   cta?: string;
   containerClass?: string;
   dark?: boolean;
+  onCta?: () => void;
 };
 
 const Tier: React.FC<TierProps> = ({
@@ -21,6 +22,7 @@ const Tier: React.FC<TierProps> = ({
   cta,
   containerClass,
   dark = false,
+  onCta,
 }) => {
   // keep featured for API compatibility; incorporate it into class when no containerClass is provided
   const baseClasses = containerClass
@@ -40,10 +42,18 @@ const Tier: React.FC<TierProps> = ({
         ))}
       </ul>
       <div className="mt-4">
-        {dark ? (
-          <a className="inline-block px-4 py-2 rounded-lg bg-white text-indigo-900 font-medium" href="#contact">{cta}</a>
+        {onCta ? (
+          dark ? (
+            <button onClick={onCta} className="inline-block px-4 py-2 rounded-lg bg-white text-indigo-900 font-medium">{cta}</button>
+          ) : (
+            <button onClick={onCta} className="inline-block px-4 py-2 rounded-lg bg-indigo-900 text-white font-medium">{cta}</button>
+          )
         ) : (
-          <a className="inline-block px-4 py-2 rounded-lg bg-indigo-900 text-white font-medium" href="#contact">{cta}</a>
+          dark ? (
+            <a className="inline-block px-4 py-2 rounded-lg bg-white text-indigo-900 font-medium" href="#contact">{cta}</a>
+          ) : (
+            <a className="inline-block px-4 py-2 rounded-lg bg-indigo-900 text-white font-medium" href="#contact">{cta}</a>
+          )
         )}
       </div>
     </div>
@@ -51,6 +61,25 @@ const Tier: React.FC<TierProps> = ({
 };
 
 export default function Packages(): React.ReactElement {
+  const [open, setOpen] = useState(false)
+  // dynamically import widget to avoid circular deps
+  const [WidgetLoaded, setWidgetLoaded] = useState<any>(null)
+  useEffect(() => {
+    import('../Widgets/ProjectChat.Widget').then(m => setWidgetLoaded(() => m.default)).catch(() => {})
+  }, [])
+  useEffect(() => {
+    const handler = () => {
+      const isEs = typeof window !== 'undefined' && window.location.pathname.startsWith('/es')
+      setToast(isEs ? 'Lead enviado — ¡gracias!' : 'Lead sent — thank you!')
+      setOpen(false)
+      // hide toast after a short delay
+      setTimeout(() => setToast(null), 2400)
+    }
+    window.addEventListener('projectChat:sent', handler as EventListener)
+    return () => window.removeEventListener('projectChat:sent', handler as EventListener)
+  }, [])
+
+  const [toast, setToast] = useState<string | null>(null)
   const [page, setPage] = useState<{
     title?: string;
     intro?: string;
@@ -173,9 +202,22 @@ export default function Packages(): React.ReactElement {
             const isMiddle = i === 1; // middle item
             const bgClass = isDark ? 'bg-indigo-900 text-white' : 'bg-white text-slate-900';
             const borderClass = isMiddle ? 'border border-slate-200' : 'border-0';
-            return <Tier key={i} {...t} cta={ctaLabel} containerClass={`${borderClass} ${bgClass}`} dark={isDark} />;
+            return <Tier key={i} {...t} cta={ctaLabel} containerClass={`${borderClass} ${bgClass}`} dark={isDark} onCta={() => setOpen(true)} />;
           })}
         </div>
+      {open && WidgetLoaded && (
+          <div className="modal-backdrop">
+            <div className="modal">
+              <button className="modal-close" onClick={() => setOpen(false)}>×</button>
+              <WidgetLoaded />
+            </div>
+          </div>
+        )}
+        {toast && (
+          <div className="fixed left-1/2 transform -translate-x-1/2 bottom-8 bg-black text-white px-4 py-2 rounded shadow">
+            {toast}
+          </div>
+        )}
       </div>
       {/* Small stats row under packages */}
       <div className="max-w-7xl mx-auto mt-8 px-8 sm:px-0">

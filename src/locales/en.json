@@ -1,0 +1,26 @@
+{
+  "projectChat": {
+    "title": "Tell us about your project",
+    "pick": "Project templates",
+    "describe": "Describe your idea",
+    "choose": "-- choose --",
+    "placeholder": "Describe your project in a few sentences",
+    "analyze": "Analyze",
+    "emailPlaceholder": "you@company.com",
+    "send": "Send to owner",
+    "sending": "Sending…",
+    "sent": "Sent",
+    "success": "Thanks — we received your request.",
+    "privacy": "We only use this to contact you about your project. No spam. You can delete your lead later.",
+    "emailRequired": "Please provide an email",
+    "summaryRequired": "Please pick a project or describe your idea first",
+    "budgetParseError": "Please provide a numeric budget in USD (e.g. $8k - $20k or 15000)",
+    "budgetLabel":"Budget (USD)",
+    "timeframeRequired":"Please select a timeframe",
+    "currentDevLabel":"Current development",
+    "currentDevHelp":"If you already have any advance on the project, please let me know"
+    ,"timeframeLabel":"Timeframe",
+    "timeframeOptions":["Less than 1 month","1-3 months","3-6 months","6+ months","Flexible / Unsure"]
+    ,"additionalComments":"Additional comments"
+  }
+}
