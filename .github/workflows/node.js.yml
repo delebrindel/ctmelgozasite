@@ -39,6 +39,14 @@ jobs:
         run: yarn
       - name: Build
         run: yarn build
+      - name: Add SPA 404 fallback
+        run: |
+          # GitHub Pages serves a 404 for deep links in SPAs; copy index.html to 404.html so routes like /es/* load the app
+          if [ -d "dist" ]; then
+            cp dist/index.html dist/404.html || true
+          else
+            echo "dist folder not found"
+          fi
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
