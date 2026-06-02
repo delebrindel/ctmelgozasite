@@ -1,0 +1,12 @@
+{
+  "packages": {
+    "title": "Opciones De Colaboración",
+    "intro": "Elige el nivel de acompañamiento que mejor se adapte a tu proyecto.",
+    "cta": "Iniciar una conversación acotada",
+    "tiers": [
+      { "name": "Evaluación Rápida", "time": "Inicio Rápido", "desc": "Valida una idea, identifica riesgos y define una hoja de ruta antes de invertir en desarrollo.", "bullets": ["Descubrimiento & priorización","Informe de factibilidad técnica","Hoja de ruta de alto nivel"], "cta": "Solicitar evaluación" },
+      { "name": "Desarrollo de Producto", "time": "Evaluación Continua", "desc": "Desarrolla nuevas funcionalidades, mejora la experiencia de usuario y acelera el crecimiento de tu producto.", "bullets": ["Sprints de features","Experimentos de conversión","Monitoreo & CI/CD"], "cta": "Hablemos de tu producto" },
+      { "name": "Escalamiento Técnico", "time": "Largo Plazo", "desc": "Optimiza rendimiento, estabilidad y procesos para preparar tu plataforma para el crecimiento.", "bullets": ["Arquitectura de plataforma","Runbook operativo","Rendimiento & seguridad"], "cta": "Revisar arquitectura" }
+    ]
+  }
+}

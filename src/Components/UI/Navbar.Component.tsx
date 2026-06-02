@@ -1,6 +1,7 @@
 import {
   Disclosure,
 } from "@headlessui/react";
+import { getCookie, setCookie } from "../../lib/cookies";
 import {
   BriefcaseIcon,
   ClipboardIcon,
@@ -25,6 +26,16 @@ function classNames(...classes: string[]) {
 
 export const Navbar = () => {
   const { currentRoute, changeRoute } = useAppStore();
+
+  const switchLang = (lang: 'en' | 'es') => {
+    setCookie('site_lang', lang);
+    if (lang === 'es' && !window.location.pathname.startsWith('/es')) {
+      window.location.pathname = '/es' + window.location.pathname;
+    }
+    if (lang === 'en' && window.location.pathname.startsWith('/es')) {
+      window.location.pathname = window.location.pathname.replace(/^\/es/, '') || '/';
+    }
+  }
 
   return (
     <Disclosure as="nav" className="fixed top-0 left-0 w-full z-50 transition-all duration-300 backdrop-blur-md bg-term-bg/80 border-b border-term-border">
@@ -54,6 +65,10 @@ export const Navbar = () => {
                   </button>
                 ))}
               </div>
+            </div>
+            <div className="hidden sm:flex sm:items-center sm:gap-2">
+              <button onClick={() => switchLang('en')} className={getCookie('site_lang') === 'en' || !window.location.pathname.startsWith('/es') ? 'px-2 py-1 rounded bg-term-card/60 text-white text-sm' : 'px-2 py-1 rounded text-gray-400 text-sm cursor-pointer'}>EN</button>
+              <button onClick={() => switchLang('es')} className={window.location.pathname.startsWith('/es') || getCookie('site_lang') === 'es' ? 'px-2 py-1 rounded bg-term-card/60 text-white text-sm' : 'px-2 py-1 rounded text-gray-400 text-sm cursor-pointer'}>ES</button>
             </div>
           </div>
         </div>

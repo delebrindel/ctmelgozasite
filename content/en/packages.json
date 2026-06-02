@@ -1,0 +1,42 @@
+{
+  "packages": {
+    "title": "Ways We Can Work Together",
+    "intro": "Choose the level of support that best fits your project.",
+    "cta": "Start a focused conversation",
+    "tiers": [
+      {
+        "name": "Rapid Assessment",
+        "time": "Quick Start",
+        "desc": "Validate an idea, identify risks, and define a roadmap before investing in development.",
+        "bullets": [
+          "Discovery & prioritization",
+          "Technical feasibility report",
+          "High level roadmap"
+        ],
+        "cta": "Request an assessment"
+      },
+      {
+        "name": "Product Development",
+        "time": "Ongoing Engagement",
+        "desc": "Build new features, improve the user experience, and accelerate your product's growth.",
+        "bullets": [
+          "Feature sprints",
+          "Conversion experiments",
+          "Monitoring & CI/CD"
+        ],
+        "cta": "Let's discuss your product"
+      },
+      {
+        "name": "Technical Scaling",
+        "time": "Long Term",
+        "desc": "Optimize performance, reliability, and processes to prepare your platform for growth.",
+        "bullets": [
+          "Platform architecture",
+          "Operational runbook",
+          "Performance & security"
+        ],
+        "cta": "Review architecture"
+      }
+    ]
+  }
+}

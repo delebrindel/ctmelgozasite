@@ -1,4 +1,5 @@
 import React from "react";
+import { getCookie, setCookie } from "../../lib/cookies";
 import { useAppStore } from "../../Global/App.Store";
 import { NAVIGATION } from "./Navbar.Component";
 
@@ -39,6 +40,32 @@ const HorizontalNavigation: React.FC = () => {
             </li>
           );
         })}
+        {/* Mobile language switcher */}
+        <li className="flex items-center gap-2">
+          <button
+            onClick={() => {
+              setCookie('site_lang','en');
+              if (window.location.pathname.startsWith('/es')) {
+                window.location.pathname = window.location.pathname.replace(/^\/es/, '') || '/';
+              } else {
+                // refresh to apply
+                window.location.reload();
+              }
+            }}
+            className={getCookie('site_lang') === 'en' || !window.location.pathname.startsWith('/es') ? 'px-2 py-1 rounded bg-term-card/60 text-white text-sm' : 'px-2 py-1 rounded text-gray-400 text-sm cursor-pointer'}
+          >EN</button>
+          <button
+            onClick={() => {
+              setCookie('site_lang','es');
+              if (!window.location.pathname.startsWith('/es')) {
+                window.location.pathname = '/es' + window.location.pathname;
+              } else {
+                window.location.reload();
+              }
+            }}
+            className={window.location.pathname.startsWith('/es') || getCookie('site_lang') === 'es' ? 'px-2 py-1 rounded bg-term-card/60 text-white text-sm' : 'px-2 py-1 rounded text-gray-400 text-sm cursor-pointer'}
+          >ES</button>
+        </li>
       </ul>
     </nav>
   );
