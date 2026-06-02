@@ -15,19 +15,9 @@
   --color-neon-purple: #bc8cff;   /* Keyword purple */
 }
 
-html,
-body {
-  background-color: var(--color-term-bg);
-  color: #c9d1d9; /* Soft white text */
-  font-family: var(--font-sans);
-  
-  /* Subtle digital noise/grid pattern could go here later */
-}
-
 /* Typography Utilities */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-mono);
-  color: white;
 }
 
 .whiteImage {
