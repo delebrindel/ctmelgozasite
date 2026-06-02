@@ -1,52 +1,93 @@
 # ctmelgozasite
 
-A modern web application built with React, TypeScript, and Vite.
+Hi — thanks for taking a peek. This is a private portfolio project and not a public product; if you found this repo and want to see more of my work, check my GitHub: https://github.com/delebrindel.
 
-## 🛠 Tech Stack
+A small single‑page web app built with React, TypeScript and Vite. The repo is intended as a portfolio piece — concise, readable, and easy to run locally.
 
-- **Framework**: [React](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
-- **Build Tool**: [Vite](https://vitejs.dev/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
-- **UI Components**: [Headless UI](https://headlessui.com/) + [Heroicons](https://heroicons.com/)
+--
 
-## 🚀 Getting Started
+## Quick links
 
-### Prerequisites
+- Live assets used in this README: `public/profile.jpg`, `public/vite.svg`, `public/cv.pdf`
+- Architecture notes: `docs/arch/README-architecture.md`
+- Changelog: `docs/CHANGELOG.md`
 
-Ensure you have Node.js installed on your machine.
+## Tech stack
 
-### Installation
+- Framework: React + TypeScript
+- Build: Vite
+- Styling: Tailwind CSS
+- State: Zustand
+- UI helpers: Headless UI + Heroicons
 
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd ctmelgozasite
-   ```
+## Preview
 
-2. Install dependencies:
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
+![Profile](/profile.jpg)
 
-## 💻 Available Scripts
+## Getting started (local)
 
-- **`npm run dev`**: Starts the development server.
-- **`npm run build`**: Compiles the project for production.
-- **`npm run preview`**: Previews the built application locally.
-- **`npm run lint`**: Runs ESLint to check for code quality issues.
+1. Clone the repo and install:
 
-## 📦 Project Structure
+```bash
+git clone <repository-url>
+cd ctmelgozasite
+npm install
+# or: yarn install
+```
+
+2. Run the dev server:
+
+```bash
+npm run dev
+# or: yarn dev
+```
+
+3. Build for production:
+
+```bash
+npm run build
+npm run preview
+```
+
+## Environment & configuration
+
+- This project uses a small set of environment variables (if any). If you need to add `.env` files locally, do not commit them. Example:
 
 ```
-ctmelgozasite/
-├── public/          # Static assets
-├── src/             # Source code
-│   ├── components/  # Reusable UI components
-│   ├── App.tsx      # Main application component
-│   └── main.tsx     # Application entry point
-├── package.json     # Project dependencies and scripts
-└── ...
+# .env.local
+VITE_API_URL=http://localhost:3000
 ```
+
+## Scripts
+
+- `npm run dev` — start dev server
+- `npm run build` — produce production build
+- `npm run preview` — preview build locally
+- `npm run lint` — run linters
+
+## Architecture (short)
+
+See `docs/arch/README-architecture.md` for a short diagram and notes. The app is a client‑side SPA using Vite for fast dev iteration and a small component-first structure under `src/`.
+
+## CV
+
+If you want a quick summary, my CV is included in the repo: `public/cv.pdf`.
+
+## Contribution & privacy
+
+This repo is a personal portfolio. If you have feedback, open an issue or reach out via my GitHub profile. There is no expectation of public contributions — treat this as a showcase.
+
+## Changelog
+
+See `docs/CHANGELOG.md` for an initial changelog and guidance on keeping it updated.
+
+## License
+
+Add your license here (if you want one). If this remains private, you can omit a license file.
+
+--
+
+Notes:
+- Replace `https://github.com/<your-username>` with your GitHub handle.
+ - GitHub: https://github.com/delebrindel
+- If you prefer different image paths, move assets into `public/` root and update references above.
