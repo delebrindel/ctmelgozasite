@@ -1,3 +1,5 @@
+// allow using CommonJS `require` when the bundle exists at build time
+declare const require: any
 let rawProjects: any[] = []
 try {
   // bundle is generated at build time; guard import for dev
