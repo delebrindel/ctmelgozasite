@@ -1,13 +1,12 @@
-import React from "react";
 import { getCookie, setCookie } from "../../lib/cookies";
 import { useAppStore } from "../../Global/App.Store";
-import { NAVIGATION } from "./Navbar.Component";
+import { NAVIGATION } from "../../Global/Navigation";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-const HorizontalNavigation: React.FC = () => {
+const HorizontalNavigation = () => {
   const { changeRoute, currentRoute } = useAppStore();
 
   return (

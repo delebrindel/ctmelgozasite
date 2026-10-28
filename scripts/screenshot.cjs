@@ -29,7 +29,7 @@ if (!fs.existsSync(OUT)) fs.mkdirSync(OUT, { recursive: true });
 
   // Packages section (scroll and capture)
   await page.evaluate(() => window.scrollTo(0, 800));
-  await page.waitForTimeout(600);
+  await new Promise(resolve => setTimeout(resolve, 600));
   await page.screenshot({ path: `${OUT}/packages.png`, fullPage: false });
   console.log('Wrote', `${OUT}/packages.png`);
 

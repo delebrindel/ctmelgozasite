@@ -1,30 +1,41 @@
 import { useEffect, useState } from "react";
-import { loadLocaleStrings } from '../../lib/useLocale'
+import { loadLocaleStrings } from "../../lib/useLocale";
+import { currentLocale, isSpanishPath, type Locale } from "../../lib/locale";
 import { SOCIAL } from "../../Global/Constants.Enum";
 
-// Default role/texts for the typewriter when localized strings are not provided
-// Default single role/text per language for the typewriter when localized strings are not provided
-const DEFAULT_ROLES_BY_LANG: Record<string, string> = {
+// Fallback typewriter phrase when the localized content has no hero roles
+const DEFAULT_ROLES: Record<Locale, string> = {
   es: "Ayudo a empresas a construir y escalar productos digitales.",
   en: "I help companies build and scale digital products.",
 };
 
-const Typewriter = () => {
+interface AboutContent {
+  about?: {
+    heading?: string;
+    intro?: string;
+    roles?: string[];
+  };
+  hero?: {
+    roles?: string[];
+  };
+}
+
+interface HomeContent {
+  hero?: {
+    sub?: string;
+  };
+}
+
+const Typewriter = ({ phrase }: { phrase: string }) => {
   const [text, setText] = useState("");
-  const [roleIndex, setRoleIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [delta, setDelta] = useState(100);
 
   useEffect(() => {
     const tick = () => {
-      // determine language and default role
-      const lang = (typeof window !== 'undefined' && window.location.pathname.startsWith('/es')) ? 'es' : 'en';
-      const defaultText = DEFAULT_ROLES_BY_LANG[lang] || DEFAULT_ROLES_BY_LANG['en'];
-      const roles = (window as any)._LOCAL_ROLES && (window as any)._LOCAL_ROLES.length ? (window as any)._LOCAL_ROLES : [defaultText];
-      const fullText = roles[roleIndex];
       const updatedText = isDeleting
-        ? fullText.substring(0, text.length - 1)
-        : fullText.substring(0, text.length + 1);
+        ? phrase.substring(0, text.length - 1)
+        : phrase.substring(0, text.length + 1);
 
       setText(updatedText);
 
@@ -32,20 +43,19 @@ const Typewriter = () => {
         setDelta(30); // Faster deletion
       }
 
-      if (!isDeleting && updatedText === fullText) {
+      if (!isDeleting && updatedText === phrase) {
         setIsDeleting(true);
         setDelta(1000); // Pause at end
       } else if (isDeleting && updatedText === "") {
-        // keep single-item behavior: reset to typing same role (no cycle)
+        // single-phrase behavior: restart typing the same phrase (no cycle)
         setIsDeleting(false);
-        setRoleIndex(0);
         setDelta(200); // Pause before typing again
       }
     };
 
     const ticker = setTimeout(tick, delta);
     return () => clearTimeout(ticker);
-  }, [text, isDeleting, roleIndex, delta]);
+  }, [text, isDeleting, delta, phrase]);
 
   return (
     <span className="border-r-4 border-neon-pink pr-1 animate-pulse text-neon-cyan">
@@ -55,37 +65,29 @@ const Typewriter = () => {
 };
 
 export function About() {
-  const [intro, setIntro] = useState<string | null>(null)
-  const [introHeading, setIntroHeading] = useState<string | null>(null)
-  const [homeStrings, setHomeStrings] = useState<any | null>(null)
-  const [localeLoaded, setLocaleLoaded] = useState(false)
+  const [content, setContent] = useState<{ about: AboutContent | null; home: HomeContent | null } | null>(null);
 
-  useEffect(()=>{
-    let mounted = true
+  useEffect(() => {
+    let mounted = true;
     // load about and home strings so this view can act as the site hero
     Promise.all([
-      loadLocaleStrings('about').catch(()=>null),
-      loadLocaleStrings('home').catch(()=>null),
-    ]).then(([aboutData, homeData])=>{
-      if (!mounted) return
-      // Prefer localized hero roles, fall back to about.roles if present
-      if (aboutData) {
-        const roles = aboutData.hero?.roles ?? aboutData.about?.roles;
-        if (roles) (window as any)._LOCAL_ROLES = roles;
-      }
-      if (aboutData && aboutData.about && aboutData.about.intro){
-        setIntro(aboutData.about.intro)
-      }
-      if (aboutData && aboutData.about && aboutData.about.heading){
-        setIntroHeading(aboutData.about.heading)
-      }
-      if (homeData && homeData.hero){
-        setHomeStrings(homeData.hero)
-      }
-      setLocaleLoaded(true)
-    })
-    return ()=>{ mounted = false }
-  },[])
+      loadLocaleStrings<AboutContent>("about").catch(() => null),
+      loadLocaleStrings<HomeContent>("home").catch(() => null),
+    ]).then(([about, home]) => {
+      if (mounted) setContent({ about, home });
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const isEs = isSpanishPath();
+  const heading = content?.about?.about?.heading;
+  const intro = content?.about?.about?.intro;
+  // Prefer localized hero roles, fall back to about.roles if present
+  const roles = content?.about?.hero?.roles ?? content?.about?.about?.roles;
+  const homeSub = content?.home?.hero?.sub;
+  const phrase = roles?.[0] ?? DEFAULT_ROLES[currentLocale()];
 
   return (
     <main className="flex items-start justify-center px-4 sm:px-6 lg:px-8 py-8">
@@ -96,28 +98,28 @@ export function About() {
             <p className="font-mono text-neon-green text-xs sm:text-sm tracking-widest">
               &gt; HELLO_WORLD
             </p>
-            {localeLoaded ? (
+            {content ? (
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white">
-                <span dangerouslySetInnerHTML={{__html: introHeading ?? `I'm <span className="text-gray-300">Cristóbal Torres</span>`}} />
+                <span dangerouslySetInnerHTML={{ __html: heading ?? `I'm <span class="text-gray-300">Cristóbal Torres</span>` }} />
               </h1>
             ) : (
-              <div style={{height: 48}} aria-hidden></div>
+              <div style={{ height: 48 }} aria-hidden></div>
             )}
             <h2 className="text-lg sm:text-lg lg:text-xl font-mono text-gray-400 sm:h-10 lg:h-12">
-              <Typewriter />
+              {content && <Typewriter phrase={phrase} />}
             </h2>
           </div>
 
           <div className="bg-term-card border border-term-border rounded-lg p-4 lg:p-6 relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-1 h-full bg-neon-purple/50 group-hover:bg-neon-purple transition-colors"></div>
-            {localeLoaded ? (
+            {content ? (
               <p className="font-sans text-gray-300 leading-relaxed text-base lg:text-lg">
-                {homeStrings?.sub ? <span>{homeStrings.sub}</span> : (intro ? <span dangerouslySetInnerHTML={{__html: intro}} /> : (
+                {homeSub ? <span>{homeSub}</span> : (intro ? <span dangerouslySetInnerHTML={{ __html: intro }} /> : (
                   <>I provide <span className="text-neon-pink font-semibold">bespoke solutions</span> tailored to company needs. Specializing in crafting reusable, component-centric frameworks and architecting robust back-office systems. Based in <span className="text-white font-mono">México</span>.</>
                 ))}
               </p>
             ) : (
-              <div style={{height: 72}} aria-hidden></div>
+              <div style={{ height: 72 }} aria-hidden></div>
             )}
           </div>
 
@@ -144,12 +146,12 @@ export function About() {
         </div>
 
         {/* Right Column: Image */}
-          <div className="order-1 lg:order-2 flex justify-center lg:justify-end relative">
+        <div className="order-1 lg:order-2 flex justify-center lg:justify-end relative">
           <div className="relative w-56 h-56 sm:w-72 sm:h-72 group">
             {/* Decorative back layers */}
             <div className="absolute inset-0 bg-neon-cyan/20 rounded-2xl transform rotate-6 transition-transform group-hover:rotate-12"></div>
             <div className="absolute inset-0 bg-neon-pink/20 rounded-2xl transform -rotate-6 transition-transform group-hover:-rotate-12"></div>
-            
+
             {/* Main Image Container */}
             <div className="relative w-full h-full rounded-2xl overflow-hidden border-2 border-term-border shadow-2xl bg-term-card">
               <div className="absolute inset-0 bg-gradient-to-tr from-term-bg/80 to-transparent z-10"></div>
@@ -158,17 +160,15 @@ export function About() {
                 src="/assets/img/mascot.png"
                 alt="Cristóbal Torres"
               />
-              {/* Availability pill near mascot (localized) */}
-              
             </div>
-            
+
             {/* Floating Badge */}
-              <div className="absolute -bottom-3 -right-3 bg-term-bg border border-neon-green px-3 py-1 rounded-full shadow-lg z-20">
-                <span className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-neon-green animate-pulse"></span>
-                    <span className="text-xs font-mono text-neon-green">{(typeof window !== 'undefined' && window.location.pathname.startsWith('/es')) ? 'Disponible' : 'Available'}</span>
-                </span>
-             </div>
+            <div className="absolute -bottom-3 -right-3 bg-term-bg border border-neon-green px-3 py-1 rounded-full shadow-lg z-20">
+              <span className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-neon-green animate-pulse"></span>
+                <span className="text-xs font-mono text-neon-green">{isEs ? "Disponible" : "Available"}</span>
+              </span>
+            </div>
           </div>
         </div>
       </div>

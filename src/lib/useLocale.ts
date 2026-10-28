@@ -1,39 +1,26 @@
-import { getCookie } from './cookies';
+import { getCookie } from './cookies'
+import { isSpanishPath, type Locale } from './locale'
 
-export async function loadLocaleStrings(page = 'home'): Promise<any> {
-  // Use Vite's import.meta.glob to ensure JSON files are available in dev and build.
-  // This returns an object mapping file paths to importer functions. Use the `query` option for json imports.
-  const modules = import.meta.glob('../../content/**/(*).json', { query: '?json' }) as Record<string, () => Promise<any>>;
+const contentModules = import.meta.glob<unknown>('../../content/**/*.json', {
+  import: 'default',
+})
 
-  const resolveFor = async (locale: 'en' | 'es') => {
-    // prefer exact page, fallback to home
-    const pagePath = `../../content/${locale}/${page}.json`;
-    const homePath = `../../content/${locale}/home.json`;
-    const tryImport = async (p: string) => {
-      if (modules[p]) { const m = await modules[p](); return m.default || m }
-      if (modules[p + '?json']) { const m = await modules[p + '?json'](); return m.default || m }
-      return null;
-    }
-
-    const pageResult = await tryImport(pagePath);
-    if (pageResult) return pageResult;
-    const homeResult = await tryImport(homePath);
-    if (homeResult) return homeResult;
-    return null;
+async function loadPage<T>(locale: Locale, page: string): Promise<T | null> {
+  // prefer the requested page, fall back to the locale's home content
+  for (const name of [page, 'home']) {
+    const load = contentModules[`../../content/${locale}/${name}.json`]
+    if (load) return (await load()) as T
   }
+  return null
+}
 
-  if (typeof window === 'undefined') {
-    return await resolveFor('en');
-  }
+function requestedLocale(): Locale {
+  if (typeof window === 'undefined') return 'en'
+  if (isSpanishPath()) return 'es'
+  // English stays the default; browser language is intentionally ignored
+  return getCookie('site_lang') === 'es' ? 'es' : 'en'
+}
 
-  const path = window.location.pathname;
-  // NOTE: removed verbose debug logging; keep lightweight comment for future diagnostics
-
-  if (path.startsWith('/es')) return await resolveFor('es');
-  const c = getCookie('site_lang');
-  if (c === 'es') return await resolveFor('es');
-  if (c === 'en') return await resolveFor('en');
-  // Don't auto-switch the default based on the browser language — keep English as the default
-  // unless the path explicitly starts with /es or the user has an explicit cookie set.
-  return await resolveFor('en');
+export async function loadLocaleStrings<T = unknown>(page = 'home'): Promise<T | null> {
+  return loadPage<T>(requestedLocale(), page)
 }

@@ -2,23 +2,8 @@ import {
   Disclosure,
 } from "@headlessui/react";
 import { getCookie, setCookie } from "../../lib/cookies";
-import {
-  BriefcaseIcon,
-  ClipboardIcon,
-  UserIcon
-} from "@heroicons/react/24/outline";
 import { useAppStore } from "../../Global/App.Store";
-import { ROUTES } from "../../Global/Constants.Enum";
-
-export const NAVIGATION = [
-  { name: "About Me", route: ROUTES.ABOUT, icon: <UserIcon height={24} /> },
-  {
-    name: "Portfolio",
-    route: ROUTES.PORTFOLIO,
-    icon: <BriefcaseIcon height={24} />,
-  },
-  { name: "Curriculum", route: ROUTES.CV, icon: <ClipboardIcon height={24} /> },
-];
+import { NAVIGATION } from "../../Global/Navigation";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -49,9 +34,9 @@ export const Navbar = () => {
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
-                {NAVIGATION.map((item) => (
+                {NAVIGATION.map((item, index) => (
                   <button
-                    key={item.name}
+                    key={item.route}
                     onClick={() => changeRoute(item.route)}
                     className={classNames(
                       currentRoute === item.route
@@ -60,7 +45,7 @@ export const Navbar = () => {
                       "rounded-t-md px-3 py-2 text-sm font-mono font-medium transition-all duration-200 ease-in-out"
                     )}
                   >
-                    <span className="mr-1 opacity-50 text-xs">0{NAVIGATION.indexOf(item) + 1}.</span>
+                    <span className="mr-1 opacity-50 text-xs">0{index + 1}.</span>
                     {item.name}
                   </button>
                 ))}

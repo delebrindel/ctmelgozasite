@@ -7,6 +7,7 @@
     "placeholder": "Describe your project in a few sentences",
     "analyze": "Analyze",
     "emailPlaceholder": "you@company.com",
+    "emailLabel": "Your email",
     "send": "Send to owner",
     "sending": "Sending…",
     "sent": "Sent",

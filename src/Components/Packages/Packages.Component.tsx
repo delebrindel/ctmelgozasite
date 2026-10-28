@@ -1,33 +1,48 @@
-import React, { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState, type FC, type ReactElement } from "react";
+import { isSpanishPath } from "../../lib/locale";
 import { loadLocaleStrings } from "../../lib/useLocale";
 
-type TierProps = {
+const ProjectChatWidget = lazy(() => import("../Widgets/ProjectChat.Widget"));
+
+interface PackageTierContent {
+  name: string;
+  time: string;
+  desc: string;
+  bullets?: string[];
+}
+
+interface PackagesContent {
+  packages?: {
+    title?: string;
+    intro?: string;
+    tiers?: PackageTierContent[];
+  };
+}
+
+interface TierProps {
   title: string;
   time: string;
   desc: string;
   bullets: string[];
-  featured?: boolean;
   cta?: string;
   containerClass?: string;
   dark?: boolean;
   onCta?: () => void;
-};
+}
 
-const Tier: React.FC<TierProps> = ({
+const Tier: FC<TierProps> = ({
   title,
   time,
   desc,
   bullets,
-  featured = false,
   cta,
   containerClass,
   dark = false,
   onCta,
 }) => {
-  // keep featured for API compatibility; incorporate it into class when no containerClass is provided
   const baseClasses = containerClass
     ? `${containerClass} max-w-sm p-6 rounded-xl flex flex-col justify-between h-full min-h-[360px]`
-    : `max-w-sm p-6 rounded-xl border flex flex-col justify-between h-full min-h-[360px] ${featured ? 'border-indigo-700' : 'border-slate-700'}`;
+    : "max-w-sm p-6 rounded-xl border border-slate-700 flex flex-col justify-between h-full min-h-[360px]";
 
   return (
     <div className={baseClasses}>
@@ -60,73 +75,38 @@ const Tier: React.FC<TierProps> = ({
   );
 };
 
-export default function Packages(): React.ReactElement {
-  const [open, setOpen] = useState(false)
-  // dynamically import widget to avoid circular deps
-  const [WidgetLoaded, setWidgetLoaded] = useState<any>(null)
-  useEffect(() => {
-    import('../Widgets/ProjectChat.Widget').then(m => setWidgetLoaded(() => m.default)).catch(() => {})
-  }, [])
-  useEffect(() => {
-    const handler = () => {
-      const isEs = typeof window !== 'undefined' && window.location.pathname.startsWith('/es')
-      setToast(isEs ? 'Lead enviado — ¡gracias!' : 'Lead sent — thank you!')
-      setOpen(false)
-      // hide toast after a short delay
-      setTimeout(() => setToast(null), 2400)
-    }
-    window.addEventListener('projectChat:sent', handler as EventListener)
-    return () => window.removeEventListener('projectChat:sent', handler as EventListener)
-  }, [])
-
-  const [toast, setToast] = useState<string | null>(null)
-  const [page, setPage] = useState<{
-    title?: string;
-    intro?: string;
-    tiers?: TierProps[];
-    cta?: string;
-  } | null>(null);
-  const [tiersState, setTiersState] = useState<TierProps[] | null>(null);
-  const [localeLoaded, setLocaleLoaded] = useState(false);
+export default function Packages(): ReactElement {
+  const isEs = isSpanishPath();
+  const [open, setOpen] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+  const [content, setContent] = useState<PackagesContent["packages"] | null>(null);
   const [statsRevealed, setStatsRevealed] = useState(false);
 
   useEffect(() => {
-    loadLocaleStrings("packages")
-      .then((data) => {
-        if (data && data.packages) {
-          const p = data.packages;
-          // map tiers if present
-          const mappedTiers = (p.tiers || []).map((t: any) => ({
-            title: t.name,
-            time: t.time,
-            desc: t.desc,
-            bullets: t.bullets || [],
-          }));
-          setPage({
-            title: p.title,
-            intro: p.intro,
-            tiers: mappedTiers,
-            cta: p.cta,
-          });
-          setTiersState(mappedTiers);
+    let toastTimer: number | undefined;
+    const handler = () => {
+      setToast(isSpanishPath() ? "Lead enviado — ¡gracias!" : "Lead sent — thank you!");
+      setOpen(false);
+      clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => setToast(null), 2400);
+    };
+    window.addEventListener("projectChat:sent", handler);
+    return () => {
+      window.removeEventListener("projectChat:sent", handler);
+      clearTimeout(toastTimer);
+    };
+  }, []);
 
-          // loaded
-          setLocaleLoaded(true);
-        }
+  useEffect(() => {
+    let active = true;
+    loadLocaleStrings<PackagesContent>("packages")
+      .then((data) => {
+        if (active && data?.packages) setContent(data.packages);
       })
       .catch(() => {});
-    // also load about to get global CTA fallback
-    loadLocaleStrings("about")
-      .then((a) => {
-        if (a && a.about && a.about.primaryCta) {
-          // if page-level CTA not set, this will be used via page?.cta fallback
-          setPage((prev) => ({
-            ...(prev || {}),
-            cta: prev?.cta ?? a.about.primaryCta,
-          }));
-        }
-      })
-      .catch(() => {});
+    return () => {
+      active = false;
+    };
   }, []);
 
   // reveal stats with a small delay after mount to allow CSS transition (simple load-time reveal)
@@ -135,41 +115,7 @@ export default function Packages(): React.ReactElement {
     return () => clearTimeout(t);
   }, []);
 
-  const tiers: TierProps[] = tiersState ?? [
-    {
-      title: "Prototype",
-      time: "4–8 weeks",
-      desc: "Validate product/feature quickly with a scoped MVP.",
-      bullets: [
-        "MVP scope & backlog",
-        "Working prototype + tests",
-        "Handoff docs",
-      ],
-    },
-    {
-      title: "Growth",
-      time: "3–6 months",
-      desc: "Deliver product improvements and increase conversions.",
-      bullets: [
-        "Feature sprints",
-        "Conversion experiments",
-        "Monitoring & CI/CD",
-      ],
-      featured: true,
-    },
-    {
-      title: "Scale",
-      time: "6+ months",
-      desc: "Platform architecture, reliability, and ops.",
-      bullets: [
-        "Platform architecture",
-        "Operational runbook",
-        "Performance & security",
-      ],
-    },
-  ];
-
-  if (!localeLoaded) {
+  if (!content) {
     // Render neutral placeholder to avoid flash of default English text
     return (
       <section className="bg-white mx-auto py-16 my-8" id="packages">
@@ -180,36 +126,59 @@ export default function Packages(): React.ReactElement {
     );
   }
 
+  const tiers: TierProps[] = (content.tiers ?? []).map((t) => ({
+    title: t.name,
+    time: t.time,
+    desc: t.desc,
+    bullets: t.bullets ?? [],
+  }));
+  const ctaLabel = isEs ? "Cuéntame más" : "Tell me more";
+
+  const stats = [
+    { label: isEs ? "años de experiencia" : "years of experience", value: "15+" },
+    { label: isEs ? "de proyectos entregados" : "of projects delivered", value: isEs ? "Decenas" : "Dozens" },
+    {
+      label: isEs ? "Experiencia liderando equipos y arquitectura de software" : "Experience leading teams & software architecture",
+      value: isEs ? "Liderazgo" : "Leadership",
+    },
+  ];
+
   return (
     <section className="bg-white mx-auto py-16 mt-8" id="packages">
       <div className="max-w-7xl mx-auto text-center px-8 sm:px-0">
         <h2 className="text-3xl text-indigo-950 font-semibold">
-          {page?.title ?? "Outcome tiers — choose the pace and scope"}
+          {content.title ?? "Outcome tiers — choose the pace and scope"}
         </h2>
         <p className="text-slate-700 mt-2">
-          {page?.intro ??
+          {content.intro ??
             "Transparent scopes to help you self‑select the right engagement model."}
         </p>
         <div className="flex flex-wrap justify-between mt-6 gap-3">
           {tiers.map((t, i) => {
             // Use a colored column background pattern: purple, white, purple
-            const isEs =
-              typeof window !== "undefined" &&
-              window.location.pathname.startsWith("/es");
-            const ctaLabel = isEs ? "Cuéntame más" : "Tell me more";
-            // choose a background class based on index
             const isDark = i % 2 === 0;
-            const isMiddle = i === 1; // middle item
-            const bgClass = isDark ? 'bg-indigo-900 text-white' : 'bg-white text-slate-900';
-            const borderClass = isMiddle ? 'border border-slate-200' : 'border-0';
-            return <Tier key={i} {...t} cta={ctaLabel} containerClass={`${borderClass} ${bgClass}`} dark={isDark} onCta={() => setOpen(true)} />;
+            const isMiddle = i === 1;
+            const bgClass = isDark ? "bg-indigo-900 text-white" : "bg-white text-slate-900";
+            const borderClass = isMiddle ? "border border-slate-200" : "border-0";
+            return (
+              <Tier
+                key={i}
+                {...t}
+                cta={ctaLabel}
+                containerClass={`${borderClass} ${bgClass}`}
+                dark={isDark}
+                onCta={() => setOpen(true)}
+              />
+            );
           })}
         </div>
-      {open && WidgetLoaded && (
+        {open && (
           <div className="modal-backdrop">
             <div className="modal">
               <button className="modal-close" onClick={() => setOpen(false)}>×</button>
-              <WidgetLoaded />
+              <Suspense fallback={null}>
+                <ProjectChatWidget />
+              </Suspense>
             </div>
           </div>
         )}
@@ -222,33 +191,17 @@ export default function Packages(): React.ReactElement {
       {/* Small stats row under packages */}
       <div className="max-w-7xl mx-auto mt-8 px-8 sm:px-0">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-          {(() => {
-            const isEs = typeof window !== 'undefined' && window.location.pathname.startsWith('/es');
-            return [
-              {
-                label: isEs ? 'años de experiencia' : 'years of experience',
-                value: '15+',
-              },
-              {
-                label: isEs ? 'de proyectos entregados' : 'of projects delivered',
-                value: isEs ? 'Decenas' : 'Dozens',
-              },
-              {
-                label: isEs ? 'Experiencia liderando equipos y arquitectura de software' : 'Experience leading teams & software architecture',
-                value: isEs ? 'Liderazgo' : 'Leadership',
-              },
-            ].map((item, i) => (
-              <div key={i} className="py-4">
-                <div
-                  className={`transform transition-all duration-500 ${statsRevealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-                  style={{ transitionDelay: `${i * 150}ms` }}
-                >
-                  <div className="text-2xl font-bold text-violet-800">{item.value}</div>
-                  <div className="text-sm text-slate-700">{item.label}</div>
-                </div>
+          {stats.map((item, i) => (
+            <div key={i} className="py-4">
+              <div
+                className={`transform transition-all duration-500 ${statsRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+                style={{ transitionDelay: `${i * 150}ms` }}
+              >
+                <div className="text-2xl font-bold text-violet-800">{item.value}</div>
+                <div className="text-sm text-slate-700">{item.label}</div>
               </div>
-            ));
-          })()}
+            </div>
+          ))}
         </div>
       </div>
     </section>
