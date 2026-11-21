@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { experience, skills, cvSummary, education, languages } from '../data/site';
+---
+
+<BaseLayout title="Curriculum Vitae" description="Work history and core skills of Cristóbal Torres, senior full stack developer and technical lead: React, TypeScript, Node.js, NestJS, and micro-frontends. Download the PDF.">
+  <div class="cv-head">
+    <div>
+      <p class="term-label">
+        <span class="tk-pink">const</span> <span class="tk-cyan">experience</span> = <span class="tk-purple">['History']</span>;
+      </p>
+      <h1 class="term-title">Curriculum Vitae</h1>
+      <p class="muted">{cvSummary}</p>
+    </div>
+    <a class="download" href="/cv-cristobal-torres.pdf" download="CV_Cristobal_Torres.pdf">↓ Download PDF</a>
+  </div>
+
+  <section class="terminal" aria-label="Core skills">
+    <div class="terminal-bar">
+      <span class="dot dot-red"></span>
+      <span class="dot dot-yellow"></span>
+      <span class="dot dot-green"></span>
+      <span class="file">skills.json</span>
+    </div>
+    <div class="skill-grid">
+      {
+        skills.map((skill) => (
+          <span class="skill">
+            <span class="q">"</span>
+            <span class="name">{skill}</span>
+            <span class="q">"</span>
+          </span>
+        ))
+      }
+    </div>
+  </section>
+
+  <section>
+    <ol class="timeline">
+      {
+        experience.map((job) => (
+          <li>
+            <div class="job-head">
+              <h3>{job.role}</h3>
+              <span class="company">@ {job.company}</span>
+            </div>
+            <p class="period">{job.period}</p>
+            <ul>
+              {job.description.map((line) => (
+                <li>{line}</li>
+              ))}
+            </ul>
+            <div class="tags">
+              {job.stack.map((tech) => (
+                <span class="tag">{tech}</span>
+              ))}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="cv-extra">
+    <h2>Education</h2>
+    <p>{education}</p>
+    <h2>Languages</h2>
+    <p>{languages.join(' · ')}</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .term-label { font: 0.9rem var(--mono); margin: 0 0 0.5rem; }
+</style>

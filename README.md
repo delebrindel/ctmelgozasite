@@ -1,93 +1,61 @@
 # ctmelgozasite
 
-Hi — thanks for taking a peek. This is a private portfolio project and not a public product; if you found this repo and want to see more of my work, check my GitHub: https://github.com/delebrindel.
+Personal site for Cristóbal Torres, built with [Astro](https://astro.build). Static output, Markdown blog, RSS feed.
 
-A small single‑page web app built with React, TypeScript and Vite. The repo is intended as a portfolio piece — concise, readable, and easy to run locally.
+## Stack
 
---
+- Astro (static site generation)
+- Markdown content collections for blog posts
+- `@astrojs/rss` and `@astrojs/sitemap`
 
-## Quick links
-
-- Live assets used in this README: `public/profile.jpg`, `public/vite.svg`, `public/cv.pdf`
-- Architecture notes: `docs/arch/README-architecture.md`
-- Changelog: `docs/CHANGELOG.md`
-
-## Tech stack
-
-- Framework: React + TypeScript
-- Build: Vite
-- Styling: Tailwind CSS
-- State: Zustand
-- UI helpers: Headless UI + Heroicons
-
-## Preview
-
-![Profile](/profile.jpg)
-
-## Getting started (local)
-
-1. Clone the repo and install:
+## Local development
 
 ```bash
-git clone <repository-url>
-cd ctmelgozasite
 npm install
-# or: yarn install
+npm run dev        # http://localhost:4321
+npm run build      # writes dist/
+npm run preview    # serves dist/ locally
 ```
 
-2. Run the dev server:
+Requires Node `>= 22.12` (Astro 7).
 
-```bash
-npm run dev
-# or: yarn dev
+## Project layout
+
+- `src/data/site.ts` — profile, experience, skills, projects, and packages content
+- `src/content/blog/*.md` — blog posts
+- `src/content.config.ts` — blog frontmatter schema
+- `src/pages/` — routes: `/`, `/portfolio/`, `/cv/`, `/blog/`, `/blog/<slug>/`, `/rss.xml`
+- `public/` — static files (`cv.pdf`, `profile.jpg`, social icons)
+
+## Writing a blog post
+
+Create `src/content/blog/<slug>.md`:
+
+```md
+---
+title: "Post title"
+description: "One-sentence summary used in lists and meta tags."
+pubDate: 2026-11-20
+tags: ["topic"]
+draft: false
+---
+
+Post body in Markdown.
 ```
 
-3. Build for production:
+Set `draft: true` to keep a post out of the index, RSS feed, and sitemap until it is ready.
 
-```bash
-npm run build
-npm run preview
-```
+## Deploying to Hostinger
 
-## Environment & configuration
+The site is static, so any Hostinger plan with file hosting works.
 
-- This project uses a small set of environment variables (if any). If you need to add `.env` files locally, do not commit them. Example:
+1. Build: `npm run build`. The output is in `dist/`.
+2. Upload the contents of `dist/` to the web root of your domain (`public_html/` on Hostinger). Use hPanel's File Manager or an FTP client.
+3. Redeploy after each change by building and uploading again.
 
-```
-# .env.local
-VITE_API_URL=http://localhost:3000
-```
+The site URL is set in `astro.config.mjs` (`site`) and `src/data/site.ts` (`url`). Change both if the domain changes.
 
-## Scripts
+## Contact
 
-- `npm run dev` — start dev server
-- `npm run build` — produce production build
-- `npm run preview` — preview build locally
-- `npm run lint` — run linters
-
-## Architecture (short)
-
-See `docs/arch/README-architecture.md` for a short diagram and notes. The app is a client‑side SPA using Vite for fast dev iteration and a small component-first structure under `src/`.
-
-## CV
-
-If you want a quick summary, my CV is included in the repo: `public/cv.pdf`.
-
-## Contribution & privacy
-
-This repo is a personal portfolio. If you have feedback, open an issue or reach out via my GitHub profile. There is no expectation of public contributions — treat this as a showcase.
-
-## Changelog
-
-See `docs/CHANGELOG.md` for an initial changelog and guidance on keeping it updated.
-
-## License
-
-Add your license here (if you want one). If this remains private, you can omit a license file.
-
---
-
-Notes:
-- Replace `https://github.com/<your-username>` with your GitHub handle.
- - GitHub: https://github.com/delebrindel
-- If you prefer different image paths, move assets into `public/` root and update references above.
+- GitHub: https://github.com/delebrindel
+- LinkedIn: https://www.linkedin.com/in/ctmelgoza/
