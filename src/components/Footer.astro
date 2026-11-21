@@ -1,0 +1,23 @@
+---
+import { site } from '../data/site';
+
+const year = new Date().getFullYear();
+// The previous site showed the first three social links in the footer.
+const footerSocial = site.social.slice(0, 3);
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span class="copy">© {year} {site.name}</span>
+    <a class="cv-link" href="/cv-cristobal-torres.pdf" download="CV_Cristobal_Torres.pdf">CV (PDF)</a>
+    <div class="social">
+      {
+        footerSocial.map((item) => (
+          <a class="social-btn" href={item.href} target="_blank" rel="noopener noreferrer" aria-label={item.label}>
+            <img src={item.icon} alt="" width="20" height="20" />
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</footer>

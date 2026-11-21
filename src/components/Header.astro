@@ -1,0 +1,44 @@
+---
+import { site } from '../data/site';
+
+const links = [
+  { href: '/#services', label: 'Services' },
+  { href: '/portfolio/', label: 'Portfolio' },
+  { href: '/cv/', label: 'Curriculum' },
+  { href: '/blog/', label: 'Engineering Beyond Code' },
+];
+
+const path = Astro.url.pathname;
+const isCurrent = (href: string): boolean => {
+  const route = href.split('#')[0] || '/';
+  return route === '/' ? path === '/' : path.startsWith(route);
+};
+---
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/"><span class="bracket">&lt;</span>{site.name}<span class="bracket">/&gt;</span></a>
+    <nav class="site-nav" aria-label="Primary">
+      {
+        links.map((link, i) => (
+          <a href={link.href} aria-current={isCurrent(link.href) ? 'page' : undefined}>
+            <span class="num">0{i + 1}.</span>
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+    <a class="header-cta" href="/contact/">Discuss a project <span aria-hidden="true">→</span></a>
+  </div>
+</header>
+
+<nav class="mobile-nav" aria-label="Mobile">
+  {
+    links.map((link) => (
+      <a href={link.href} aria-current={isCurrent(link.href) ? 'page' : undefined}>
+        {link.label}
+      </a>
+    ))
+  }
+  <a href="/contact/" aria-current={path.startsWith('/contact') ? 'page' : undefined}>Contact</a>
+</nav>

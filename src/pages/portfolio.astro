@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { projects } from '../data/site';
+---
+
+<BaseLayout title="Software Engineering Case Studies" description="Selected software engineering work by Cristóbal Torres: legacy platform migrations, internal tools, and production web applications.">
+  <div class="page-head">
+    <h1 class="term-title">
+      <span class="tk-pink">Portfolio</span>
+    </h1>
+    <p class="muted">Examples of platform modernization, internal tooling, and product engineering. Some client work is confidential, so these summaries focus on the engineering challenges and outcomes I can share.</p>
+  </div>
+
+  <section class="projects">
+    {
+      projects.map((project) => (
+        <article class="project">
+          <div class="project-bar">
+            <div class="dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span class="file">{project.id}.tsx</span>
+          </div>
+          <div class="project-body">
+            <div class="project-head">
+              <h3>{project.title}</h3>
+              {project.status === 'in-progress' && <span class="wip">WIP</span>}
+            </div>
+            <p class="desc">{project.description}</p>
+            {project.outcome && <p class="outcome">{project.outcome}</p>}
+            <div class="hashtags">
+              {project.stack.map((tech) => (
+                <span>#{tech}</span>
+              ))}
+            </div>
+            <div class="project-actions">
+              {project.github ? (
+                <a href={project.github} target="_blank" rel="noopener noreferrer">Source</a>
+              ) : (
+                <span class="private" title="Private repository">Private</span>
+              )}
+              {project.link && (
+                <a class="live" href={project.link} target="_blank" rel="noopener noreferrer">Live Demo</a>
+              )}
+            </div>
+          </div>
+          <div class="sheen" aria-hidden="true"></div>
+        </article>
+      ))
+    }
+  </section>
+</BaseLayout>

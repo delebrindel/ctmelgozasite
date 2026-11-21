@@ -1,0 +1,13 @@
+---
+const proofPoints = [
+  { value: 'Since 2010', label: 'Building and evolving production software' },
+  { value: '12 platforms', label: 'Migrated from legacy stacks to modern services' },
+  { value: 'Senior, hands-on', label: 'Architecture and implementation in one engagement' },
+];
+---
+
+<section class="proof-strip" aria-label="Consulting experience">
+  {proofPoints.map((item) => (
+    <div class="proof-item"><strong>{item.value}</strong><span>{item.label}</span></div>
+  ))}
+</section>

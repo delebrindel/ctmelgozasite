@@ -1,0 +1,26 @@
+---
+import { packages } from '../../data/site';
+---
+
+<section class="services-section" id="services">
+  <div class="section-heading">
+    <p class="eyebrow">How I can help</p>
+    <h2>{packages.title}</h2>
+    <p class="packages-intro">{packages.intro}</p>
+  </div>
+  <div class="tiers">
+    {packages.tiers.map((tier, i) => (
+      <article class:list={['tier', i === 1 && 'dark']}>
+        <h3>{tier.name}<span class="time">{tier.time}</span></h3>
+        <p class="desc">{tier.desc}</p>
+        <ul>{tier.bullets.map((bullet) => <li>{bullet}</li>)}</ul>
+        <a class="cta" href="/contact/">{tier.cta} <span aria-hidden="true">→</span></a>
+        <a class="details" href={`/services/${tier.slug}/`}>Service details <span aria-hidden="true">→</span></a>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .tier .details { display: block; margin-top: 0.75rem; font-size: 0.9rem; color: inherit; text-decoration: underline; }
+</style>

@@ -1,0 +1,33 @@
+---
+import { site } from '../../data/site';
+---
+
+<section class="hero">
+  <div class="hero-text">
+    <p class="eyebrow">Software engineering consultancy · Mexico · Remote</p>
+    <h1>Software Engineering Consultant</h1>
+    <p class="role">Senior engineering, from technical direction to production code.</p>
+    <div class="intro">
+      <p>{site.intro}</p>
+      <p>{site.background}</p>
+    </div>
+    <div class="hero-actions">
+      <a class="primary-cta" href="/contact/">Discuss your project <span aria-hidden="true">→</span></a>
+      <a class="secondary-cta" href="/portfolio/">Check my portfolio</a>
+    </div>
+    <p class="response-note">Share the challenge, current stack, and what a good outcome looks like.</p>
+  </div>
+
+  <div class="photo-wrap">
+    <div class="photo-layer cyan" aria-hidden="true"></div>
+    <div class="photo-layer pink" aria-hidden="true"></div>
+    <div class="photo">
+      <img src="/assets/img/mascot.png" alt="Illustration representing Cristóbal Torres's software engineering consultancy" />
+    </div>
+    <span class="photo-badge">Cristóbal Torres</span>
+  </div>
+</section>
+
+<style>
+  .focus { font-size: clamp(1.25rem, 2.2vw, 1.5rem); font-weight: 600; color: var(--text); margin: 0 0 1rem; }
+</style>
