@@ -3,6 +3,7 @@ title: "Rebuilding this site as a static blog"
 description: "How and why I rebuilt this personal site from a React single-page app into a static Astro site with a Markdown blog."
 pubDate: 2026-11-20
 tags: ["astro", "web", "meta"]
+draft: true
 ---
 
 This site used to be a React and Vite single-page app. It had no blog, and every page was client-rendered
