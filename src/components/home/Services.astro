@@ -10,12 +10,26 @@ import { packages } from '../../data/site';
   </div>
   <div class="tiers">
     {packages.tiers.map((tier, i) => (
-      <article class:list={['tier', i === 1 && 'dark']}>
-        <h3>{tier.name}<span class="time">{tier.time}</span></h3>
-        <p class="desc">{tier.desc}</p>
-        <ul>{tier.bullets.map((bullet) => <li>{bullet}</li>)}</ul>
-        <a class="cta" href="/contact/">{tier.cta} <span aria-hidden="true">→</span></a>
-        <a class="details" href={`/services/${tier.slug}/`}>Service details <span aria-hidden="true">→</span></a>
+      <article class:list={['tier', i === 0 && 'dark']}>
+        <div class="tier-main">
+          <p class="kind">{tier.kind}</p>
+          <h3><span class="num">{String(i + 1).padStart(2, '0')}.</span> {tier.name}</h3>
+          {tier.tagline && <p class="tagline">{tier.tagline}</p>}
+          <p class="desc">{tier.desc}</p>
+        </div>
+        <div class="tier-list">
+          {tier.includesLabel && <p class="includes">{tier.includesLabel}</p>}
+          <ul>{tier.bullets.map((bullet) => <li>{bullet}</li>)}</ul>
+          {tier.price && (
+            <p class="price">
+              <strong>{tier.price}</strong>
+              {tier.priceApprox && <span class="approx">{tier.priceApprox}</span>}
+            </p>
+          )}
+          {tier.priceNote && <p class="price-note">{tier.priceNote}</p>}
+          <a class="cta" href="/contact/">{tier.cta} <span aria-hidden="true">→</span></a>
+          <a class="details" href={`/services/${tier.slug}/`}>Service details <span aria-hidden="true">→</span></a>
+        </div>
       </article>
     ))}
   </div>
@@ -23,4 +37,18 @@ import { packages } from '../../data/site';
 
 <style>
   .tier .details { display: block; margin-top: 0.75rem; font-size: 0.9rem; color: inherit; text-decoration: underline; }
+  .tier-main, .tier-list { display: flex; flex-direction: column; }
+  .tier-list { flex: 1; }
+  .tier-list ul { flex: 0 0 auto; }
+  .tier .kind { margin: 0; font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--cyan); }
+  .tier h3 { margin-top: 0.5rem; }
+  .tier h3 .num { color: var(--purple); }
+  .tier .tagline { margin: 0.5rem 0 0; font-weight: 600; color: var(--white); }
+  .tier .includes { margin: 0.75rem 0 0.5rem; font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--cyan); }
+  .tier .includes + ul { margin-top: 0; }
+  .tier .price { display: flex; align-items: baseline; gap: 0.6rem; margin: 1.25rem 0 0; flex-wrap: wrap; }
+  .tier .price strong { font-size: 1.35rem; color: var(--white); }
+  .tier .price .approx { font-size: 0.9rem; opacity: 0.7; }
+  .tier .price-note { margin: 0.35rem 0 1rem; font-size: 0.85rem; opacity: 0.75; }
+  .tier-list .cta { margin-top: auto; }
 </style>

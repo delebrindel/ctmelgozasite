@@ -13,6 +13,7 @@ interface Props {
 const { title, description = site.description, schema } = Astro.props;
 const fullTitle = title === site.name ? title : `${title} · ${site.name}`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
+const ogImage = new URL('/og-image.png', site.url).href;
 
 const personLd = {
   '@context': 'https://schema.org',
@@ -29,14 +30,10 @@ const personLd = {
 <!doctype html>
 <html lang="en">
   <head>
-  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-TC54BXS9"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-</script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Google Tag Manager (standard snippet: pushes gtm.start so page-view triggers fire) -->
+    <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-TC54BXS9');</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
@@ -48,13 +45,20 @@ const personLd = {
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={new URL('/profile.jpg', site.url).href} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${site.name}: software engineering consultant`} />
     <meta property="og:site_name" content={site.name} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
     {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
   </head>
   <body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TC54BXS9" height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>
     <Header />
     <main>
       <div class="wrap">

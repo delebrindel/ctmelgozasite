@@ -1,11 +1,15 @@
 ---
+import { getCollection } from 'astro:content';
 import { site } from '../data/site';
+
+// Hide the Blog link until at least one post is published.
+const hasPosts = (await getCollection('blog', ({ data }) => !data.draft)).length > 0;
 
 const links = [
   { href: '/#services', label: 'Services' },
   { href: '/portfolio/', label: 'Portfolio' },
-  { href: '/cv/', label: 'Curriculum' },
-  { href: '/blog/', label: 'Engineering Beyond Code' },
+  { href: '/cv/', label: 'CV' },
+  ...(hasPosts ? [{ href: '/blog/', label: 'Blog' }] : []),
 ];
 
 const path = Astro.url.pathname;

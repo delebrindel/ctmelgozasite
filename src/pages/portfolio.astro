@@ -1,6 +1,24 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { projects } from '../data/site';
+
+const groups = [
+  {
+    title: 'Tools',
+    ids: ['spento', 'backoffice-system', 'ui-library', 'migration-tool'],
+  },
+  {
+    title: 'Websites',
+    ids: ['sanders-mantilla', 'raffoom-platform', 'plapers', 'red-consultores', 'photography-site'],
+  },
+].map((group) => ({
+  title: group.title,
+  projects: group.ids.flatMap((id) => projects.filter((project) => project.id === id)),
+}));
+
+const groupedIds = groups.flatMap((group) => group.projects.map((project) => project.id));
+const ungrouped = projects.filter((project) => !groupedIds.includes(project.id));
+if (ungrouped.length > 0) groups.push({ title: 'Other', projects: ungrouped });
 ---
 
 <BaseLayout title="Software Engineering Case Studies" description="Selected software engineering work by Cristóbal Torres: legacy platform migrations, internal tools, and production web applications.">
@@ -11,9 +29,23 @@ import { projects } from '../data/site';
     <p class="muted">Examples of platform modernization, internal tooling, and product engineering. Some client work is confidential, so these summaries focus on the engineering challenges and outcomes I can share.</p>
   </div>
 
-  <section class="projects">
+  <div class="project-filters" role="group" aria-label="Filter projects" hidden>
+    <button type="button" class="filter-chip is-active" data-filter="all" aria-pressed="true">
+      All <span class="chip-count">{projects.length}</span>
+    </button>
+    {groups.map((group) => (
+      <button type="button" class="filter-chip" data-filter={group.title.toLowerCase()} aria-pressed="false">
+        {group.title} <span class="chip-count">{group.projects.length}</span>
+      </button>
+    ))}
+  </div>
+
+  {groups.map((group) => (
+  <div class="project-group" data-group={group.title.toLowerCase()}>
+  <h2 class="project-group-title">{group.title}</h2>
+  <section class="projects" aria-label={group.title}>
     {
-      projects.map((project) => (
+      group.projects.map((project) => (
         <article class="project">
           <div class="project-bar">
             <div class="dots">
@@ -23,6 +55,23 @@ import { projects } from '../data/site';
             </div>
             <span class="file">{project.id}.tsx</span>
           </div>
+          {project.mobileShots && project.mobileShots.length > 0 ? (
+            <div class="project-shots" data-gallery={project.gallery ? JSON.stringify(project.gallery) : undefined} data-title={project.title}>
+              {project.mobileShots.map((src) => {
+                const index = project.gallery ? project.gallery.findIndex((item) => item.src === src) : -1;
+                const img = <img src={src} alt={`${project.title} screen`} width="390" height="844" loading="lazy" decoding="async" />;
+                return index >= 0 ? (
+                  <button type="button" class="phone" data-index={index} aria-label={`View ${project.title} screenshots full screen`}>{img}</button>
+                ) : (
+                  <div class="phone">{img}</div>
+                );
+              })}
+            </div>
+          ) : project.image ? (
+            <div class="project-shot">
+              <img src={project.image} alt={`${project.title} homepage`} width="1280" height="800" loading="lazy" decoding="async" />
+            </div>
+          ) : null}
           <div class="project-body">
             <div class="project-head">
               <h3>{project.title}</h3>
@@ -30,11 +79,14 @@ import { projects } from '../data/site';
             </div>
             <p class="desc">{project.description}</p>
             {project.outcome && <p class="outcome">{project.outcome}</p>}
-            <div class="hashtags">
-              {project.stack.map((tech) => (
-                <span>#{tech}</span>
+            <div class="hashtags" aria-label="Project focus">
+              {project.categories.map((category) => (
+                <span>#{category}</span>
               ))}
             </div>
+            {project.technologies && project.technologies.length > 0 && (
+              <p class="technology-list"><strong>Technology:</strong> {project.technologies.join(' · ')}</p>
+            )}
             <div class="project-actions">
               {project.github ? (
                 <a href={project.github} target="_blank" rel="noopener noreferrer">Source</a>
@@ -42,7 +94,7 @@ import { projects } from '../data/site';
                 <span class="private" title="Private repository">Private</span>
               )}
               {project.link && (
-                <a class="live" href={project.link} target="_blank" rel="noopener noreferrer">Live Demo</a>
+                <a class="live" href={project.link} target="_blank" rel="noopener noreferrer">Visit site</a>
               )}
             </div>
           </div>
@@ -51,4 +103,126 @@ import { projects } from '../data/site';
       ))
     }
   </section>
+  </div>
+  ))}
+
+  <dialog class="lightbox" id="lightbox" aria-label="Screenshot viewer">
+    <button type="button" class="lb-btn lb-close" aria-label="Close">×</button>
+    <button type="button" class="lb-btn lb-nav lb-prev" aria-label="Previous screenshot">‹</button>
+    <figure class="lb-figure">
+      <img class="lb-img" alt="" />
+      <figcaption class="lb-caption"></figcaption>
+    </figure>
+    <button type="button" class="lb-btn lb-nav lb-next" aria-label="Next screenshot">›</button>
+  </dialog>
+
+  <script>
+    // Lightbox for galleries (native <dialog>: Esc closes, focus is trapped and restored).
+    const box = document.querySelector<HTMLDialogElement>('#lightbox');
+    if (box) {
+      const img = box.querySelector<HTMLImageElement>('.lb-img')!;
+      const caption = box.querySelector<HTMLElement>('.lb-caption')!;
+      let items: { src: string; caption: string }[] = [];
+      let current = 0;
+
+      const show = (i: number) => {
+        current = (i + items.length) % items.length;
+        const item = items[current];
+        img.src = item.src;
+        img.alt = item.caption;
+        caption.textContent = `${current + 1} / ${items.length} · ${item.caption}`;
+      };
+
+      document.querySelectorAll<HTMLElement>('.project-shots[data-gallery]').forEach((shots) => {
+        shots.querySelectorAll<HTMLButtonElement>('button.phone').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            items = JSON.parse(shots.dataset.gallery ?? '[]');
+            show(Number(btn.dataset.index));
+            box.showModal();
+          });
+        });
+      });
+
+      box.querySelector('.lb-close')!.addEventListener('click', () => box.close());
+      box.querySelector('.lb-prev')!.addEventListener('click', () => show(current - 1));
+      box.querySelector('.lb-next')!.addEventListener('click', () => show(current + 1));
+
+      // Click on the dark backdrop closes.
+      box.addEventListener('click', (e) => {
+        if (e.target === box) box.close();
+      });
+      box.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') show(current - 1);
+        if (e.key === 'ArrowRight') show(current + 1);
+      });
+
+      // Swipe on touch screens.
+      let startX = 0;
+      box.addEventListener('touchstart', (e) => { startX = e.changedTouches[0].clientX; }, { passive: true });
+      box.addEventListener('touchend', (e) => {
+        const dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+      });
+    }
+  </script>
+
+  <script>
+    const bar = document.querySelector<HTMLElement>('.project-filters');
+    const chips = Array.from(document.querySelectorAll<HTMLButtonElement>('.filter-chip'));
+    const groupEls = Array.from(document.querySelectorAll<HTMLElement>('.project-group'));
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
+
+    // Filters need JS, so they stay hidden without it.
+    if (bar) bar.hidden = false;
+
+    const applyFilter = (filter: string) => {
+      const animate = !reduceMotion.matches;
+      const visible = groupEls.filter((el) => !el.hidden);
+      const before = new Map(visible.map((el) => [el, el.getBoundingClientRect().top]));
+
+      groupEls.forEach((el) => {
+        el.getAnimations().forEach((a) => a.cancel());
+        el.hidden = !(filter === 'all' || el.dataset.group === filter);
+      });
+
+      groupEls.forEach((el) => {
+        if (el.hidden || !animate) return;
+
+        if (before.has(el)) {
+          // Already on screen: slide from its old position to the new one.
+          const dy = before.get(el)! - el.getBoundingClientRect().top;
+          if (Math.abs(dy) > 1) {
+            el.animate(
+              [{ transform: `translateY(${dy}px)` }, { transform: 'translateY(0)' }],
+              { duration: 380, easing: EASE },
+            );
+          }
+        } else {
+          // Newly shown: cards fade up one after another.
+          el.querySelectorAll<HTMLElement>('.project-group-title, .project').forEach((node, i) => {
+            node.animate(
+              [
+                { opacity: 0, transform: 'translateY(14px) scale(0.98)' },
+                { opacity: 1, transform: 'translateY(0) scale(1)' },
+              ],
+              { duration: 420, delay: i * 60, easing: EASE, fill: 'backwards' },
+            );
+          });
+        }
+      });
+    };
+
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        if (chip.classList.contains('is-active')) return;
+        chips.forEach((c) => {
+          const on = c === chip;
+          c.classList.toggle('is-active', on);
+          c.setAttribute('aria-pressed', String(on));
+        });
+        applyFilter(chip.dataset.filter ?? 'all');
+      });
+    });
+  </script>
 </BaseLayout>
