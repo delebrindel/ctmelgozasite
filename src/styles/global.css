@@ -1235,6 +1235,7 @@ button.phone:focus-visible {
   margin: 0;
   max-width: min(92vw, 520px);
 }
+@media (min-width: 1024px) { .lb-figure { max-width: min(92vw, 1200px); } }
 
 .lb-img {
   display: block;
@@ -1360,6 +1361,10 @@ button.phone:focus-visible {
   margin-top: 1.25rem;
 }
 
+.project-shots[data-shape='landscape'] .phone {
+  flex-basis: 46%;
+}
+
 .project:hover .phone:nth-child(1) {
   transform: translateY(-4px);
 }
@@ -1459,7 +1464,8 @@ button.phone:focus-visible {
 }
 
 .project-actions a,
-.project-actions .private {
+.project-actions .private,
+.project-actions .public {
   display: flex;
   align-items: center;
   font: 12px var(--mono);
@@ -1479,6 +1485,10 @@ button.phone:focus-visible {
 .project-actions .private {
   color: #8f8dc4;
   cursor: not-allowed;
+}
+
+.project-actions .public {
+  color: var(--green);
 }
 
 .project .sheen {

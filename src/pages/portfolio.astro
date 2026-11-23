@@ -5,7 +5,7 @@ import { projects } from '../data/site';
 const groups = [
   {
     title: 'Tools',
-    ids: ['spento', 'backoffice-system', 'ui-library', 'migration-tool'],
+    ids: ['spento', 'miso', 'backoffice-system', 'ui-library', 'migration-tool'],
   },
   {
     title: 'Websites',
@@ -56,7 +56,7 @@ if (ungrouped.length > 0) groups.push({ title: 'Other', projects: ungrouped });
             <span class="file">{project.id}.tsx</span>
           </div>
           {project.mobileShots && project.mobileShots.length > 0 ? (
-            <div class="project-shots" data-gallery={project.gallery ? JSON.stringify(project.gallery) : undefined} data-title={project.title}>
+            <div class="project-shots" data-shape={project.shotShape ?? 'portrait'} data-gallery={project.gallery ? JSON.stringify(project.gallery) : undefined} data-title={project.title}>
               {project.mobileShots.map((src) => {
                 const index = project.gallery ? project.gallery.findIndex((item) => item.src === src) : -1;
                 const img = <img src={src} alt={`${project.title} screen`} width="390" height="844" loading="lazy" decoding="async" />;
@@ -90,6 +90,8 @@ if (ungrouped.length > 0) groups.push({ title: 'Other', projects: ungrouped });
             <div class="project-actions">
               {project.github ? (
                 <a href={project.github} target="_blank" rel="noopener noreferrer">Source</a>
+              ) : project.visibility === 'public' ? (
+                <span class="public">Public</span>
               ) : (
                 <span class="private" title="Private repository">Private</span>
               )}

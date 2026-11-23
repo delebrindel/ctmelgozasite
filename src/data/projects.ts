@@ -15,6 +15,8 @@ export interface Project {
   gallery?: { src: string; caption: string }[];
   link?: string;
   github?: string;
+  visibility?: 'public' | 'private';
+  shotShape?: 'portrait' | 'landscape';
   status: 'completed' | 'in-progress' | 'archived';
 }
 
@@ -45,6 +47,7 @@ export const projects: Project[] = [
   },
   {
     id: 'red-consultores',
+    visibility: 'public',
     title: 'Red Consultores Website',
     description: 'Client-facing website and customer portal for a civil-protection consultancy, presenting its RED 369 risk-management platform and services.',
     categories: ['Consultancy website', 'Client portal', 'Risk management'],
@@ -56,6 +59,7 @@ export const projects: Project[] = [
   },
   {
     id: 'plapers',
+    visibility: 'public',
     title: 'Plapers E-commerce Website',
     description: 'E-commerce storefront for a Mexican maker of personalized decorative plates, with product browsing and an online ordering flow.',
     categories: ['E-commerce', 'Product catalog', 'Ordering flow'],
@@ -76,6 +80,7 @@ export const projects: Project[] = [
   },
   {
     id: 'sanders-mantilla',
+    visibility: 'public',
     title: 'Sanders y Mantilla Website',
     description: 'Multilingual marketing website for a translation agency, built around lightweight, reusable Vue and PHP components.',
     categories: ['Marketing website', 'Multilingual'],
@@ -87,6 +92,7 @@ export const projects: Project[] = [
   },
   {
     id: 'raffoom-platform',
+    visibility: 'public',
     title: 'Raffoom Website',
     description: 'Built a reusable raffle platform from the ground up, including customer-facing sites, back-office tooling, and a CMS.',
     categories: ['Platform engineering', 'Customer-facing web apps', 'CMS'],
@@ -107,6 +113,31 @@ export const projects: Project[] = [
     status: 'completed',
   },
   {
+    id: 'miso',
+    title: 'Miso',
+    description: 'Public UI component library with Storybook, built from scratch with accessible Button, Input, Select, Modal, Tabs, and Toast components.',
+    categories: ['Design systems', 'Developer experience', 'Accessibility'],
+    stack: ['Design systems', 'Developer experience', 'Accessibility'],
+    technologies: ['TypeScript', 'React', 'Storybook', 'Tailwind CSS', 'Vitest'],
+    shotShape: 'landscape',
+    mobileShots: [
+      '/assets/projects/miso/01-button-all-buttons.webp',
+      '/assets/projects/miso/03-tabs.webp',
+    ],
+    gallery: [
+      { src: '/assets/projects/miso/01-button-all-buttons.webp', caption: 'Button: primary, secondary and ghost variants in sm and md, plus disabled' },
+      { src: '/assets/projects/miso/02-input-with-error.webp', caption: 'Input with validation error text' },
+      { src: '/assets/projects/miso/03-tabs.webp', caption: 'Tabs, including a disabled tab' },
+      { src: '/assets/projects/miso/04-modal.webp', caption: 'Modal, closed, with its trigger button' },
+      { src: '/assets/projects/miso/05-toast-provider.webp', caption: 'Toast provider with info, success and error triggers' },
+      { src: '/assets/projects/miso/06-hero.webp', caption: 'Hero section' },
+      { src: '/assets/projects/miso/07-accordion.webp', caption: 'Accordion with one item open' },
+    ],
+    link: 'https://delebrindel.github.io/miso/',
+    github: 'https://github.com/delebrindel/miso',
+    status: 'in-progress',
+  },
+  {
     id: 'migration-tool',
     title: 'Legacy Migration Orchestrator',
     description: 'Automated migration tooling that supported the move of 12 high-traffic platforms from a legacy PHP monolith to modern microservices.',
@@ -118,6 +149,7 @@ export const projects: Project[] = [
   },
   {
     id: 'photography-site',
+    visibility: 'public',
     title: 'Photography Portfolio',
     description: 'Visual portfolio for photography work and personal projects.',
     categories: ['Portfolio', 'Photography'],
