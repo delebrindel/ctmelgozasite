@@ -1610,6 +1610,8 @@ button.phone:focus-visible {
 .contact-form textarea:focus-visible { outline: 2px solid var(--cyan); outline-offset: 1px; }
 .contact-form .form-note { margin: -0.25rem 0 0; font-size: 0.8rem; color: var(--dim); }
 .contact-form button:disabled { opacity: 0.6; cursor: wait; }
+.contact-form [aria-invalid="true"] { border-color: #fca5a5; }
+.contact-form .field-error { margin: -0.5rem 0 0; font-size: 0.85rem; color: #fca5a5; }
 .form-status { display: none; padding: 0.85rem 1rem; border-radius: 8px; border: 1px solid var(--border); outline: none; }
 .form-status.ok { display: block; color: var(--green); border-color: rgba(74, 222, 128, 0.4); background: rgba(74, 222, 128, 0.08); }
 .form-status.error { display: block; color: #fca5a5; border-color: rgba(252, 165, 165, 0.4); background: rgba(252, 165, 165, 0.08); }

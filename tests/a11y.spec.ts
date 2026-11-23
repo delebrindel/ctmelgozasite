@@ -48,3 +48,19 @@ test('footer social links announce opening in a new tab', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('link', { name: 'LinkedIn (opens in a new tab)' })).toBeVisible();
 });
+
+test('empty contact submit shows inline errors, focuses first field, and does not post (EN and ES)', async ({ page }) => {
+  const posts: string[] = [];
+  page.on('request', (req) => {
+    if (req.method() === 'POST' && req.url().includes('formspree.io')) posts.push(req.url());
+  });
+  for (const path of ['/contact/', '/es/contacto/']) {
+    await page.goto(path);
+    await page.locator('#contact-form button[type="submit"]').click();
+    const invalid = page.locator('#contact-form [aria-invalid="true"]');
+    await expect(invalid.first()).toBeFocused();
+    await expect(invalid).toHaveCount(4);
+    await expect(page.locator('#contact-form .field-error').first()).not.toBeEmpty();
+  }
+  expect(posts).toEqual([]);
+});
