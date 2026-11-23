@@ -6,8 +6,8 @@ export const projects: Project[] = [
     title: 'App de presupuesto familiar Spento',
     description:
       'Una app de finanzas familiares compartidas para registrar gastos e ingresos, definir presupuestos individuales, dividir gastos y administrar pagos recurrentes.',
-    categories: ['Finanzas personales', 'Presupuesto familiar', 'Aplicación web progresiva'],
-    stack: ['Finanzas personales', 'Presupuesto familiar', 'Aplicación web progresiva'],
+    categories: ['Personal finance', 'Household budgeting', 'Progressive web app'],
+    stack: ['Personal finance', 'Household budgeting', 'Progressive web app'],
     technologies: ['PHP 8.2', 'MySQL', 'TypeScript', 'Service Worker'],
     mobileShots: [
       '/assets/projects/spento/home.png',
