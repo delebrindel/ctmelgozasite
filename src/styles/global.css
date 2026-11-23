@@ -1,6 +1,7 @@
 /* Terminal theme ported from the previous Tailwind site (src/index.css + components). */
 
 :root {
+  color-scheme: dark;
   --bg: #0b0a22;
   --card: #15133a;
   --border: #2e2a66;
@@ -83,6 +84,11 @@ img {
   height: auto;
 }
 
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
 section {
   margin-bottom: 3.5rem;
 }
@@ -99,6 +105,22 @@ section {
 
 .muted {
   color: var(--muted);
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  background: var(--card);
+  color: var(--white);
+  border: 1px solid var(--cyan);
+  border-radius: 6px;
+}
+
+.skip-link:focus {
+  top: 1rem;
 }
 
 .sr-only {
@@ -207,7 +229,6 @@ section {
 
 .site-nav a .num {
   font-size: 12px;
-  opacity: 0.5;
   margin-right: 0.25rem;
 }
 
@@ -976,7 +997,8 @@ section {
   }
 }
 
-.timeline h3 {
+.timeline h2 {
+  margin: 0.25rem 0;
   font-family: var(--sans);
   font-size: 1.25rem;
   font-weight: 700;
@@ -984,7 +1006,7 @@ section {
   transition: color 0.3s;
 }
 
-.timeline > li:hover h3 {
+.timeline > li:hover h2 {
   color: var(--cyan);
 }
 
@@ -1583,7 +1605,6 @@ button.phone:focus-visible {
   padding: 0.6rem 0.75rem;
 }
 .contact-form [hidden] { display: none; }
-.contact-form .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 .contact-form input:focus-visible,
 .contact-form select:focus-visible,
 .contact-form textarea:focus-visible { outline: 2px solid var(--cyan); outline-offset: 1px; }

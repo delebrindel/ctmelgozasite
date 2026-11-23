@@ -47,9 +47,9 @@ const diagnosticName = packages.tiers.find((tier) => tier.slug === diagnosticSlu
     </label>
 
     <!-- Honeypot: hidden from people, filled in by bots. Formspree discards submissions where it is set. -->
-    <div class="hp" aria-hidden="true">
+    <div hidden>
       <label>{c.honeypot}
-        <input name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+        <input name="_gotcha" type="text" autocomplete="off" />
       </label>
     </div>
     <input type="hidden" name="_subject" value={c.subject} />
@@ -59,7 +59,7 @@ const diagnosticName = packages.tiers.find((tier) => tier.slug === diagnosticSlu
     <div class="form-status" id="form-status" role="status" aria-live="polite" tabindex="-1"></div>
   </form>
 
-  <script define:vars={{ linkedin: site.links.linkedin, msg: { sending: c.sending, ok: c.ok, okBody: c.okBody, error: c.error, linkedinLabel: c.linkedin, subjectFrom: c.subjectFrom, subjectDefault: c.subjectDefault } }}>
+  <script define:vars={{ linkedin: site.links.linkedin, msg: { sending: c.sending, ok: c.ok, okBody: c.okBody, error: c.error, linkedinLabel: c.linkedin, newTab: ui.a11y.newTab, subjectFrom: c.subjectFrom, subjectDefault: c.subjectDefault } }}>
     const form = document.getElementById('contact-form');
     const status = document.getElementById('form-status');
     const button = form.querySelector('button[type="submit"]');
@@ -106,7 +106,7 @@ const diagnosticName = packages.tiers.find((tier) => tier.slug === diagnosticSlu
         syncDiagnosticField();
         show('ok', `<strong>${msg.ok}</strong> ${msg.okBody}`);
       } catch (error) {
-        show('error', `${msg.error} <a href="${linkedin}" target="_blank" rel="noopener noreferrer">${msg.linkedinLabel}</a>.`);
+        show('error', `${msg.error} <a href="${linkedin}" target="_blank" rel="noopener noreferrer">${msg.linkedinLabel}<span class="sr-only"> (${msg.newTab})</span></a>.`);
       } finally {
         button.disabled = false;
         button.innerHTML = button.dataset.label;

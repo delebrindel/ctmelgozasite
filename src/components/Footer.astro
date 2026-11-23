@@ -14,7 +14,7 @@ const footerSocial = site.social.slice(0, 3);
     <div class="social">
       {
         footerSocial.map((item) => (
-          <a class="social-btn" href={item.href} target="_blank" rel="noopener noreferrer" aria-label={item.label}>
+          <a class="social-btn" href={item.href} target="_blank" rel="noopener noreferrer" aria-label={`${item.label} (${ui.a11y.newTab})`}>
             <img src={item.icon} alt="" width="20" height="20" />
           </a>
         ))

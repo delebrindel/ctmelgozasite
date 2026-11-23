@@ -89,7 +89,7 @@ if (ungrouped.length > 0) groups.push({ key: 'other', title: p.groups.other, pro
             </div>
             <p class="desc">{project.description}</p>
             {project.outcome && <p class="outcome">{project.outcome}</p>}
-            <div class="hashtags" aria-label={p.focus}>
+            <div class="hashtags" role="group" aria-label={p.focus}>
               {project.categories.map((category) => (
                 <span>#{category}</span>
               ))}
@@ -99,14 +99,14 @@ if (ungrouped.length > 0) groups.push({ key: 'other', title: p.groups.other, pro
             )}
             <div class="project-actions">
               {project.github ? (
-                <a href={project.github} target="_blank" rel="noopener noreferrer">{p.source}</a>
+                <a href={project.github} target="_blank" rel="noopener noreferrer">{p.source}<span class="sr-only"> ({ui.a11y.newTab})</span></a>
               ) : project.visibility === 'public' ? (
                 <span class="public">{p.public}</span>
               ) : (
                 <span class="private" title={p.privateTitle}>{p.private}</span>
               )}
               {project.link && (
-                <a class="live" href={project.link} target="_blank" rel="noopener noreferrer">{p.visit}</a>
+                <a class="live" href={project.link} target="_blank" rel="noopener noreferrer">{p.visit}<span class="sr-only"> ({ui.a11y.newTab})</span></a>
               )}
             </div>
           </div>

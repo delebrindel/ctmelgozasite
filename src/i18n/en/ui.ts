@@ -2,6 +2,7 @@
 export const ui = {
   localeName: 'English',
   switchTo: 'Español',
+  a11y: { skip: 'Skip to content', newTab: 'opens in a new tab' },
   nav: {
     primary: 'Primary',
     mobile: 'Mobile',

@@ -4,6 +4,7 @@ import type { ui as EnUi } from '../en/ui';
 export const ui: typeof EnUi = {
   localeName: 'Español',
   switchTo: 'English',
+  a11y: { skip: 'Saltar al contenido', newTab: 'se abre en una pestaña nueva' },
   nav: {
     primary: 'Principal',
     mobile: 'Móvil',
