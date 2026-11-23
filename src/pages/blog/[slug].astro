@@ -1,41 +1,14 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection, render } from 'astro:content';
-import { formatDate } from '../../lib/format';
+import BlogPostPage from '../../views/BlogPostPage.astro';
+import { getCollection } from 'astro:content';
+import { postLocale, postSlug } from '../../i18n';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog', ({ data }) => !data.draft);
-  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+  const posts = await getCollection('blog', (entry) => !entry.data.draft && postLocale(entry.id) === 'en');
+  return posts.map((post) => ({ params: { slug: postSlug(post.id) }, props: { post } }));
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description}>
-  <article class="article">
-    <p class="muted mono">
-      <a href="/blog/">← All posts</a>
-    </p>
-    <h1>{post.data.title}</h1>
-    <p class="muted">
-      <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
-      {
-        post.data.updatedDate && (
-          <>
-            {' · updated '}
-            <time datetime={post.data.updatedDate.toISOString()}>{formatDate(post.data.updatedDate)}</time>
-          </>
-        )
-      }
-    </p>
-    {
-      post.data.tags.length > 0 && (
-        <p>
-          {post.data.tags.map((tag) => <span class="tag">{tag}</span>)}
-        </p>
-      )
-    }
-    <Content />
-  </article>
-</BaseLayout>
+<BlogPostPage post={post} />

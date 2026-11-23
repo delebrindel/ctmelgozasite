@@ -1,97 +1,12 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { site, packages, projects } from '../../data/site';
+import ServicePage from '../../views/ServicePage.astro';
+import { t } from '../../i18n';
 
 export function getStaticPaths() {
-  return packages.tiers.map((tier) => ({
-    params: { slug: tier.slug },
-    props: { tier },
-  }));
+  return t('en').packages.tiers.map((tier, index) => ({ params: { slug: tier.slug }, props: { index } }));
 }
 
-const { tier } = Astro.props;
-const serviceName = tier.name;
-const related = projects.filter((project) => tier.projectIds.includes(project.id));
-const copy = {
-  back: '← All services',
-  included: tier.includesLabel ?? 'What’s included',
-  related: 'Related work',
-  next: 'Next step',
-  heading: 'Tell me what needs to change.',
-  body: 'Share the system, the constraints, and the outcome you need. I’ll reply with a practical way to start.',
-};
-const serviceLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Service',
-  name: serviceName,
-  serviceType: tier.name,
-  description: tier.desc,
-  url: new URL(`/services/${tier.slug}/`, site.url).href,
-  provider: { '@type': 'Person', name: site.name, url: site.url },
-  ...(tier.offer && {
-    offers: { '@type': 'Offer', price: tier.offer.amount, priceCurrency: tier.offer.currency, description: tier.priceNote },
-  }),
-};
+const { index } = Astro.props;
 ---
 
-<BaseLayout title={serviceName} description={tier.desc} schema={serviceLd}>
-  <section class="service-page">
-    <p class="back"><a href="/#services">{copy.back}</a></p>
-    <div class="section-heading">
-      <p class="eyebrow">{tier.kind}</p>
-      <h1>{serviceName}</h1>
-      {tier.tagline && <p class="service-tagline">{tier.tagline}</p>}
-      <p class="packages-intro">{tier.desc}</p>
-      {tier.price && (
-        <p class="service-price">
-          <strong>{tier.price}</strong>
-          {tier.priceApprox && <span class="approx">{tier.priceApprox}</span>}
-        </p>
-      )}
-      {tier.priceNote && <p class="service-price-note">{tier.priceNote}</p>}
-    </div>
-
-    <div class="service-detail">
-      <h2>{copy.included}</h2>
-      <ul class="service-list">
-        {tier.bullets.map((bullet) => <li>{bullet}</li>)}
-      </ul>
-    </div>
-
-    {related.length > 0 && (
-      <section class="service-related">
-        <h2>{copy.related}</h2>
-        <div class="work-grid">
-          {related.map((project) => (
-            <article class="work-card">
-              <span class="work-type">{project.stack.slice(0, 3).join(' · ')}</span>
-              <h3>{project.title}</h3>
-              <p>{project.description}</p>
-              {project.outcome && <p class="outcome">{project.outcome}</p>}
-            </article>
-          ))}
-        </div>
-      </section>
-    )}
-
-    <section class="closing-cta">
-      <p class="eyebrow">{copy.next}</p>
-      <h2>{copy.heading}</h2>
-      <p>{copy.body}</p>
-      <a class="primary-cta" href="/contact/">{tier.cta} <span aria-hidden="true">→</span></a>
-    </section>
-  </section>
-</BaseLayout>
-
-<style>
-  .back { margin: 0 0 1.5rem; font-size: 0.9rem; }
-  .service-tagline { text-align: center; margin: 0.75rem 0 0; font-size: 1.15rem; font-weight: 600; color: var(--white); }
-  .service-price { display: flex; justify-content: center; align-items: baseline; gap: 0.75rem; margin: 1.25rem 0 0; }
-  .service-price strong { font-size: 1.75rem; color: var(--white); }
-  .service-price .approx { opacity: 0.7; }
-  .service-price-note { text-align: center; margin: 0.4rem 0 0; font-size: 0.9rem; color: var(--muted); }
-  .service-detail, .service-related { margin-top: 2.5rem; }
-  .service-list { list-style: none; padding: 0; margin: 1rem 0 0; }
-  .service-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
-  .service-list li::before { content: "• "; color: var(--purple); }
-</style>
+<ServicePage index={index} />

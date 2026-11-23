@@ -1,10 +1,13 @@
 ---
-import { packages } from '../../data/site';
+import { localeOf, routes, servicePath, t } from '../../i18n';
+
+const locale = localeOf(Astro.currentLocale);
+const { packages, ui } = t(locale);
 ---
 
 <section class="services-section" id="services">
   <div class="section-heading">
-    <p class="eyebrow">How I can help</p>
+    <p class="eyebrow">{ui.services.eyebrow}</p>
     <h2>{packages.title}</h2>
     <p class="packages-intro">{packages.intro}</p>
   </div>
@@ -27,8 +30,8 @@ import { packages } from '../../data/site';
             </p>
           )}
           {tier.priceNote && <p class="price-note">{tier.priceNote}</p>}
-          <a class="cta" href="/contact/">{tier.cta} <span aria-hidden="true">→</span></a>
-          <a class="details" href={`/services/${tier.slug}/`}>Service details <span aria-hidden="true">→</span></a>
+          <a class="cta" href={routes.contact[locale]}>{tier.cta} <span aria-hidden="true">→</span></a>
+          <a class="details" href={servicePath(locale, tier.slug)}>{ui.services.details} <span aria-hidden="true">→</span></a>
         </div>
       </article>
     ))}

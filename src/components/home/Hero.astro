@@ -1,30 +1,33 @@
 ---
-import { site } from '../../data/site';
+import { localeOf, routes, t } from '../../i18n';
+
+const locale = localeOf(Astro.currentLocale);
+const { site, ui } = t(locale);
 ---
 
 <section class="hero">
   <div class="hero-text">
-    <p class="eyebrow">Software engineering consultancy · Mexico · Remote</p>
-    <h1>Software Engineering Consultant</h1>
-    <p class="role">Senior engineering, from technical direction to production code.</p>
+    <p class="eyebrow">{ui.hero.eyebrow}</p>
+    <h1>{ui.hero.h1}</h1>
+    <p class="role">{ui.hero.role}</p>
     <div class="intro">
       <p>{site.intro}</p>
       <p>{site.background}</p>
     </div>
     <div class="hero-actions">
-      <a class="primary-cta" href="/contact/">Discuss your project <span aria-hidden="true">→</span></a>
-      <a class="secondary-cta" href="/portfolio/">Check my portfolio</a>
+      <a class="primary-cta" href={routes.contact[locale]}>{ui.hero.discuss} <span aria-hidden="true">→</span></a>
+      <a class="secondary-cta" href={routes.portfolio[locale]}>{ui.hero.portfolio}</a>
     </div>
-    <p class="response-note">Share the challenge, current stack, and what a good outcome looks like.</p>
+    <p class="response-note">{ui.hero.response}</p>
   </div>
 
   <div class="photo-wrap">
     <div class="photo-layer cyan" aria-hidden="true"></div>
     <div class="photo-layer pink" aria-hidden="true"></div>
     <div class="photo">
-      <img src="/assets/img/mascot.png" alt="Illustration representing Cristóbal Torres's software engineering consultancy" />
+      <img src="/assets/img/mascot.png" alt={ui.hero.photoAlt} />
     </div>
-    <span class="photo-badge">Cristóbal Torres</span>
+    <span class="photo-badge">{site.name}</span>
   </div>
 </section>
 

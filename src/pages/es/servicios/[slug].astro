@@ -1,0 +1,12 @@
+---
+import ServicePage from '../../../views/ServicePage.astro';
+import { t } from '../../../i18n';
+
+export function getStaticPaths() {
+  return t('es').packages.tiers.map((tier, index) => ({ params: { slug: tier.slug }, props: { index } }));
+}
+
+const { index } = Astro.props;
+---
+
+<ServicePage index={index} />

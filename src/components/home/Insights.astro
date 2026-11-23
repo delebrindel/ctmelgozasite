@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { blogPath, localeOf, postSlug, routes, t } from '../../i18n';
 import { formatDate } from '../../lib/format';
 
 interface Props {
@@ -7,19 +8,21 @@ interface Props {
 }
 
 const { posts } = Astro.props;
+const locale = localeOf(Astro.currentLocale);
+const { ui } = t(locale);
 ---
 
 {posts.length > 0 && (
   <section class="insights-section">
-    <div class="section-heading"><p class="eyebrow">From the blog</p><h2>Engineering Beyond Code</h2></div>
+    <div class="section-heading"><p class="eyebrow">{ui.insights.eyebrow}</p><h2>{ui.insights.h2}</h2></div>
     <ul class="post-list">
       {posts.map((post) => (
         <li>
-          <a href={`/blog/${post.id}/`}>{post.data.title}</a>
-          <div class="muted"><time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time></div>
+          <a href={blogPath(locale, postSlug(post.id))}>{post.data.title}</a>
+          <div class="muted"><time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate, ui.dateLocale)}</time></div>
         </li>
       ))}
     </ul>
-    <p><a href="/blog/">All articles →</a></p>
+    <p><a href={routes.blog[locale]}>{ui.insights.all} →</a></p>
   </section>
 )}

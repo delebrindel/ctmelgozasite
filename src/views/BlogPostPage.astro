@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { render, type CollectionEntry } from 'astro:content';
+import { blogPath, localeOf, postSlug, routes, t } from '../i18n';
+import { formatDate } from '../lib/format';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const locale = localeOf(Astro.currentLocale);
+const { ui } = t(locale);
+const c = ui.blog;
+const { Content } = await render(post);
+
+const slug = postSlug(post.id);
+const alternates = { en: blogPath('en', slug), es: blogPath('es', slug) };
+---
+
+<BaseLayout title={post.data.title} description={post.data.description} alternates={alternates}>
+  <article class="article">
+    <p class="muted mono">
+      <a href={routes.blog[locale]}>{c.back}</a>
+    </p>
+    <h1>{post.data.title}</h1>
+    <p class="muted">
+      <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate, ui.dateLocale)}</time>
+      {
+        post.data.updatedDate && (
+          <>
+            {` · ${c.updated} `}
+            <time datetime={post.data.updatedDate.toISOString()}>{formatDate(post.data.updatedDate, ui.dateLocale)}</time>
+          </>
+        )
+      }
+    </p>
+    {
+      post.data.tags.length > 0 && (
+        <p>
+          {post.data.tags.map((tag) => <span class="tag">{tag}</span>)}
+        </p>
+      )
+    }
+    <Content />
+  </article>
+</BaseLayout>

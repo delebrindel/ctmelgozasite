@@ -1,11 +1,17 @@
+---
+import { localeOf, t } from '../../i18n';
+
+const { ui } = t(localeOf(Astro.currentLocale));
+---
+
 <section class="approach-section">
   <div>
-    <p class="eyebrow">A practical engagement</p>
-    <h2>Clear technical direction. Useful work shipped.</h2>
+    <p class="eyebrow">{ui.approach.eyebrow}</p>
+    <h2>{ui.approach.h2}</h2>
   </div>
   <ol class="approach-steps">
-    <li><strong>Understand the system</strong><span>We clarify the business goal, constraints, architecture, and risks.</span></li>
-    <li><strong>Agree on the next step</strong><span>You get a focused scope and a sequence of work your team can evaluate.</span></li>
-    <li><strong>Build and hand over</strong><span>Ship improvements with maintainability, documentation, and your team in mind.</span></li>
+    {ui.approach.steps.map((step) => (
+      <li><strong>{step.title}</strong><span>{step.body}</span></li>
+    ))}
   </ol>
 </section>

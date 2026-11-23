@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { localeOf, routes, t } from '../i18n';
+
+const locale = localeOf(Astro.currentLocale);
+const { experience, skills, cvSummary, education, languages, ui } = t(locale);
+const c = ui.cv;
+---
+
+<BaseLayout title={c.title} description={c.description} alternates={routes.cv}>
+  <div class="cv-head">
+    <div>
+      <p class="term-label">
+        <span class="tk-pink">const</span> <span class="tk-cyan">experience</span> = <span class="tk-purple">{`['${c.term}']`}</span>;
+      </p>
+      <h1 class="term-title">{c.title}</h1>
+      <p class="muted">{cvSummary}</p>
+    </div>
+    <a class="download" href="/cv-cristobal-torres.pdf" download={ui.footer.cvFile}>↓ {c.download}</a>
+  </div>
+
+  <section class="terminal" aria-label={c.skillsAria}>
+    <div class="terminal-bar">
+      <span class="dot dot-red"></span>
+      <span class="dot dot-yellow"></span>
+      <span class="dot dot-green"></span>
+      <span class="file">skills.json</span>
+    </div>
+    <div class="skill-grid">
+      {
+        skills.map((skill) => (
+          <span class="skill">
+            <span class="q">"</span>
+            <span class="name">{skill}</span>
+            <span class="q">"</span>
+          </span>
+        ))
+      }
+    </div>
+  </section>
+
+  <section>
+    <ol class="timeline">
+      {
+        experience.map((job) => (
+          <li>
+            <div class="job-head">
+              <h3>{job.role}</h3>
+              <span class="company">{c.at} {job.company}</span>
+            </div>
+            <p class="period">{job.period}</p>
+            <ul>
+              {job.description.map((line) => (
+                <li>{line}</li>
+              ))}
+            </ul>
+            <div class="tags">
+              {job.stack.map((tech) => (
+                <span class="tag">{tech}</span>
+              ))}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="cv-extra">
+    <h2>{c.education}</h2>
+    <p>{education}</p>
+    <h2>{c.languages}</h2>
+    <p>{languages.join(' · ')}</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .term-label { font: 0.9rem var(--mono); margin: 0 0 0.5rem; }
+</style>

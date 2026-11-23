@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { routes, t } from '../i18n';
+
+// The 404 is served from one root file, so it is English only; see the locale note in the report.
+const c = t('en').ui.notFound;
+---
+
+<BaseLayout title={c.title} description={c.description} alternates={routes.home}>
+  <div class="page-head">
+    <p class="eyebrow">{c.code}</p>
+    <h1>{c.h1}</h1>
+    <p class="muted">{c.body}</p>
+  </div>
+  <ul>
+    <li><a href="/">{c.home}</a></li>
+    <li><a href="/portfolio/">{c.portfolio}</a></li>
+    <li><a href="/cv/">{c.cv}</a></li>
+    <li><a href="/contact/">{c.contact}</a></li>
+  </ul>
+</BaseLayout>

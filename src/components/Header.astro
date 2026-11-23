@@ -1,28 +1,38 @@
 ---
 import { getCollection } from 'astro:content';
-import { site } from '../data/site';
+import { localeOf, otherLocale, postLocale, routes, t } from '../i18n';
 
-// Hide the Blog link until at least one post is published.
-const hasPosts = (await getCollection('blog', ({ data }) => !data.draft)).length > 0;
+interface Props {
+  /** The current page's path in the other language. */
+  alternate: string;
+}
+
+const { alternate } = Astro.props;
+const locale = localeOf(Astro.currentLocale);
+const other = otherLocale(locale);
+const { site, ui } = t(locale);
+
+// Hide the Blog link until at least one post is published in this language.
+const hasPosts = (await getCollection('blog', (entry) => !entry.data.draft && postLocale(entry.id) === locale)).length > 0;
 
 const links = [
-  { href: '/#services', label: 'Services' },
-  { href: '/portfolio/', label: 'Portfolio' },
-  { href: '/cv/', label: 'CV' },
-  ...(hasPosts ? [{ href: '/blog/', label: 'Blog' }] : []),
+  { href: `${routes.home[locale]}#services`, label: ui.nav.services },
+  { href: routes.portfolio[locale], label: ui.nav.portfolio },
+  { href: routes.cv[locale], label: ui.nav.cv },
+  ...(hasPosts ? [{ href: routes.blog[locale], label: ui.nav.blog }] : []),
 ];
 
 const path = Astro.url.pathname;
 const isCurrent = (href: string): boolean => {
-  const route = href.split('#')[0] || '/';
-  return route === '/' ? path === '/' : path.startsWith(route);
+  const route = href.split('#')[0];
+  return route === routes.home[locale] ? path === route : path.startsWith(route);
 };
 ---
 
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="/"><span class="bracket">&lt;</span>{site.name}<span class="bracket">/&gt;</span></a>
-    <nav class="site-nav" aria-label="Primary">
+    <a class="brand" href={routes.home[locale]}><span class="bracket">&lt;</span>{site.name}<span class="bracket">/&gt;</span></a>
+    <nav class="site-nav" aria-label={ui.nav.primary}>
       {
         links.map((link, i) => (
           <a href={link.href} aria-current={isCurrent(link.href) ? 'page' : undefined}>
@@ -32,11 +42,12 @@ const isCurrent = (href: string): boolean => {
         ))
       }
     </nav>
-    <a class="header-cta" href="/contact/">Discuss a project <span aria-hidden="true">→</span></a>
+    <a class="header-cta" href={routes.contact[locale]}>{ui.nav.discuss} <span aria-hidden="true">→</span></a>
+    <a class="lang-switch" href={alternate} lang={other}>{ui.switchTo}</a>
   </div>
 </header>
 
-<nav class="mobile-nav" aria-label="Mobile">
+<nav class="mobile-nav" aria-label={ui.nav.mobile}>
   {
     links.map((link) => (
       <a href={link.href} aria-current={isCurrent(link.href) ? 'page' : undefined}>
@@ -44,5 +55,6 @@ const isCurrent = (href: string): boolean => {
       </a>
     ))
   }
-  <a href="/contact/" aria-current={path.startsWith('/contact') ? 'page' : undefined}>Contact</a>
+  <a href={routes.contact[locale]} aria-current={path.startsWith(routes.contact[locale]) ? 'page' : undefined}>{ui.nav.contact}</a>
+  <a class="lang-switch" href={alternate} lang={other}>{ui.switchTo}</a>
 </nav>

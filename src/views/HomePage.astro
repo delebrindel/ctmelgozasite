@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import Hero from '../components/home/Hero.astro';
+import ProofStrip from '../components/home/ProofStrip.astro';
+import Services from '../components/home/Services.astro';
+import Approach from '../components/home/Approach.astro';
+import FeaturedWork from '../components/home/FeaturedWork.astro';
+import ClosingCta from '../components/home/ClosingCta.astro';
+import Insights from '../components/home/Insights.astro';
+import { localeOf, postLocale, routes, t } from '../i18n';
+
+const locale = localeOf(Astro.currentLocale);
+const { site, ui } = t(locale);
+
+const latestPosts = (await getCollection('blog', (entry) => !entry.data.draft && postLocale(entry.id) === locale))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const homeLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: `${site.name}, ${ui.home.schemaName}`,
+  url: site.url,
+  description: site.description,
+  address: { '@type': 'PostalAddress', addressCountry: 'MX' },
+  founder: { '@type': 'Person', name: site.name },
+};
+---
+
+<BaseLayout title={ui.home.title} description={site.description} schema={homeLd} alternates={routes.home}>
+  <Hero />
+  <ProofStrip />
+  <Services />
+  <Approach />
+  <FeaturedWork />
+  <ClosingCta />
+  <Insights posts={latestPosts} />
+</BaseLayout>

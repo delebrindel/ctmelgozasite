@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { localeOf, routes, servicePath, t } from '../i18n';
+
+interface Props {
+  /** Index into packages.tiers; the same index is the same service in both languages. */
+  index: number;
+}
+
+const { index } = Astro.props;
+const locale = localeOf(Astro.currentLocale);
+const { site, packages, projects, ui } = t(locale);
+const tier = packages.tiers[index];
+const c = ui.services_page;
+const related = projects.filter((project) => tier.projectIds.includes(project.id));
+const alternates = {
+  en: servicePath('en', t('en').packages.tiers[index].slug),
+  es: servicePath('es', t('es').packages.tiers[index].slug),
+};
+const serviceLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: tier.name,
+  serviceType: tier.name,
+  description: tier.desc,
+  url: new URL(servicePath(locale, tier.slug), site.url).href,
+  provider: { '@type': 'Person', name: site.name, url: site.url },
+  ...(tier.offer && {
+    offers: { '@type': 'Offer', price: tier.offer.amount, priceCurrency: tier.offer.currency, description: tier.priceNote },
+  }),
+};
+---
+
+<BaseLayout title={tier.name} description={tier.desc} schema={serviceLd} alternates={alternates}>
+  <section class="service-page">
+    <p class="back"><a href={`${routes.home[locale]}#services`}>{c.back}</a></p>
+    <div class="section-heading">
+      <p class="eyebrow">{tier.kind}</p>
+      <h1>{tier.name}</h1>
+      {tier.tagline && <p class="service-tagline">{tier.tagline}</p>}
+      <p class="packages-intro">{tier.desc}</p>
+      {tier.price && (
+        <p class="service-price">
+          <strong>{tier.price}</strong>
+          {tier.priceApprox && <span class="approx">{tier.priceApprox}</span>}
+        </p>
+      )}
+      {tier.priceNote && <p class="service-price-note">{tier.priceNote}</p>}
+    </div>
+
+    <div class="service-detail">
+      <h2>{tier.includesLabel ?? c.included}</h2>
+      <ul class="service-list">
+        {tier.bullets.map((bullet) => <li>{bullet}</li>)}
+      </ul>
+    </div>
+
+    {related.length > 0 && (
+      <section class="service-related">
+        <h2>{c.related}</h2>
+        <div class="work-grid">
+          {related.map((project) => (
+            <article class="work-card">
+              <span class="work-type">{project.categories.slice(0, 3).join(' · ')}</span>
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+              {project.outcome && <p class="outcome">{project.outcome}</p>}
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <section class="closing-cta">
+      <p class="eyebrow">{c.next}</p>
+      <h2>{c.heading}</h2>
+      <p>{c.body}</p>
+      <a class="primary-cta" href={routes.contact[locale]}>{tier.cta} <span aria-hidden="true">→</span></a>
+    </section>
+  </section>
+</BaseLayout>
+
+<style>
+  .back { margin: 0 0 1.5rem; font-size: 0.9rem; }
+  .service-tagline { text-align: center; margin: 0.75rem 0 0; font-size: 1.15rem; font-weight: 600; color: var(--white); }
+  .service-price { display: flex; justify-content: center; align-items: baseline; gap: 0.75rem; margin: 1.25rem 0 0; }
+  .service-price strong { font-size: 1.75rem; color: var(--white); }
+  .service-price .approx { opacity: 0.7; }
+  .service-price-note { text-align: center; margin: 0.4rem 0 0; font-size: 0.9rem; color: var(--muted); }
+  .service-detail, .service-related { margin-top: 2.5rem; }
+  .service-list { list-style: none; padding: 0; margin: 1rem 0 0; }
+  .service-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+  .service-list li::before { content: "• "; color: var(--purple); }
+</style>

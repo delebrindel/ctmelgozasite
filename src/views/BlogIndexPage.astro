@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { blogPath, localeOf, postLocale, postSlug, routes, t } from '../i18n';
+import { formatDate } from '../lib/format';
+
+const locale = localeOf(Astro.currentLocale);
+const { ui } = t(locale);
+const c = ui.blog;
+
+const posts = (await getCollection('blog', (entry) => !entry.data.draft && postLocale(entry.id) === locale)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<BaseLayout title={c.title} description={c.description} alternates={routes.blog}>
+  <h1>{c.h1}</h1>
+  <p class="muted">{c.intro} <a href={routes.rss[locale]}>{c.rss}</a></p>
+
+  {
+    posts.length === 0 ? (
+      <p class="muted">{c.empty}</p>
+    ) : (
+      <ul class="post-list">
+        {posts.map((post) => (
+          <li>
+            <a href={blogPath(locale, postSlug(post.id))}>{post.data.title}</a>
+            <div class="muted">
+              <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate, ui.dateLocale)}</time>
+            </div>
+            <p>{post.data.description}</p>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</BaseLayout>

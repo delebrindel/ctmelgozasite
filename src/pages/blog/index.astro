@@ -1,32 +1,5 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-import { formatDate } from '../../lib/format';
-
-const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+import BlogIndexPage from '../../views/BlogIndexPage.astro';
 ---
 
-<BaseLayout title="Web Development Blog" description="Practical notes on web architecture, React and Node.js, legacy migrations, and shipping digital products that scale.">
-  <h1>Blog</h1>
-  <p class="muted">Practical notes on web architecture, frontend performance, and shipping digital products. <a href="/rss.xml">RSS</a></p>
-
-  {
-    posts.length === 0 ? (
-      <p class="muted">No posts yet.</p>
-    ) : (
-      <ul class="post-list">
-        {posts.map((post) => (
-          <li>
-            <a href={`/blog/${post.id}/`}>{post.data.title}</a>
-            <div class="muted">
-              <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
-            </div>
-            <p>{post.data.description}</p>
-          </li>
-        ))}
-      </ul>
-    )
-  }
-</BaseLayout>
+<BlogIndexPage />

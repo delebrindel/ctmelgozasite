@@ -1,13 +1,11 @@
 ---
-const proofPoints = [
-  { value: 'Since 2010', label: 'Building and evolving production software' },
-  { value: '12 platforms', label: 'Migrated from legacy stacks to modern services' },
-  { value: 'Senior, hands-on', label: 'Architecture and implementation in one engagement' },
-];
+import { localeOf, t } from '../../i18n';
+
+const { ui } = t(localeOf(Astro.currentLocale));
 ---
 
-<section class="proof-strip" aria-label="Consulting experience">
-  {proofPoints.map((item) => (
+<section class="proof-strip" aria-label={ui.proof.aria}>
+  {ui.proof.items.map((item) => (
     <div class="proof-item"><strong>{item.value}</strong><span>{item.label}</span></div>
   ))}
 </section>

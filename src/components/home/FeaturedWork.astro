@@ -1,25 +1,24 @@
+---
+import { localeOf, routes, t } from '../../i18n';
+
+const locale = localeOf(Astro.currentLocale);
+const { ui } = t(locale);
+---
+
 <section class="featured-work">
   <div class="section-heading">
-    <p class="eyebrow">Relevant experience</p>
-    <h2>Engineering for real production constraints</h2>
-    <p class="packages-intro">Selected outcomes from platform modernization, product delivery, and internal tooling.</p>
+    <p class="eyebrow">{ui.featured.eyebrow}</p>
+    <h2>{ui.featured.h2}</h2>
+    <p class="packages-intro">{ui.featured.intro}</p>
   </div>
   <div class="work-grid">
-    <article class="work-card">
-      <span class="work-type">Legacy modernization</span>
-      <h3>12-platform modernization</h3>
-      <p>Moved 12 production platforms from a legacy PHP monolith toward modern services, reducing deployment time from 120 to 30 minutes.</p>
-    </article>
-    <article class="work-card">
-      <span class="work-type">Product platform</span>
-      <h3>Reusable raffle operations platform</h3>
-      <p>Architected customer-facing sites, back-office tooling, and a CMS that supported 7 companies across 4 raffle websites.</p>
-    </article>
-    <article class="work-card">
-      <span class="work-type">Internal tools</span>
-      <h3>Operational systems for gaming teams</h3>
-      <p>Built real-time dashboards, user management, and automated reporting to support day-to-day gaming operations.</p>
-    </article>
+    {ui.featured.items.map((item) => (
+      <article class="work-card">
+        <span class="work-type">{item.type}</span>
+        <h3>{item.title}</h3>
+        <p>{item.body}</p>
+      </article>
+    ))}
   </div>
-  <p class="work-link"><a href="/portfolio/">Explore my portfolio →</a></p>
+  <p class="work-link"><a href={routes.portfolio[locale]}>{ui.featured.portfolio} →</a></p>
 </section>
