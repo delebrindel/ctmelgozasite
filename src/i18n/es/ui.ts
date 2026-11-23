@@ -12,7 +12,7 @@ export const ui: typeof EnUi = {
     cv: 'CV',
     blog: 'Blog',
     contact: 'Contacto',
-    discuss: 'Hablemos sobre',
+    discuss: 'Hablemos de tu proyecto',
     language: 'Idioma',
   },
   footer: {
@@ -23,7 +23,7 @@ export const ui: typeof EnUi = {
     eyebrow: 'Consultoría en ingeniería de software · México · Remoto',
     h1: 'Consultor en Ingeniería de Software',
     role: 'Ingeniería senior, desde la dirección técnica hasta el código en producción.',
-    discuss: 'Hablemos sobre',
+    discuss: 'Hablemos de tu proyecto',
     portfolio: 'Revisa mi portafolio',
     response: 'Cuéntame el reto, el stack actual y cómo se ve un buen resultado.',
     photoAlt: 'Ilustración que representa la consultoría en ingeniería de software de Cristóbal Torres',
