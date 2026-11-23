@@ -118,6 +118,16 @@ export const projects: Project[] = [
     status: 'in-progress',
   },
   {
+    id: 'prompting-guidelines',
+    title: 'PromptingGuidelines',
+    description: 'Archivos de instrucciones y skills reutilizables para Claude Code y OMP: reglas de arquitectura, flujos de git y seguridad, publicación en npm, migraciones de base de datos, revisiones de accesibilidad y limpieza segura de archivos temporales.',
+    categories: ['IA para desarrollo', 'Experiencia de desarrollo'],
+    stack: ['IA para desarrollo', 'Experiencia de desarrollo'],
+    technologies: ['Markdown', 'Claude Code', 'OMP'],
+    github: 'https://github.com/delebrindel/PromptingGuidelines',
+    status: 'in-progress',
+  },
+  {
     id: 'migration-tool',
     title: 'Orquestador de migraciones legadas',
     description: 'Herramienta de migración automatizada que dio soporte al traslado de 12 plataformas de alto tráfico, desde un monolito legado en PHP hacia microservicios modernos.',
