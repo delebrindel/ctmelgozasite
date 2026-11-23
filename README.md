@@ -15,6 +15,7 @@ npm install
 npm run dev        # http://localhost:4321
 npm run build      # writes dist/
 npm run preview    # serves dist/ locally
+npm run test:a11y  # builds, then axe checks on all public pages (first run: npx playwright install chromium)
 ```
 
 Requires Node `>= 22.12` (Astro 7).
