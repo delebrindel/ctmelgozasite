@@ -38,7 +38,7 @@ export const packages = {
       cta: 'Hablemos de modernización', slug: 'modernizacion-sistemas-legados', projectIds: ['migration-tool'],
     },
     {
-      name: 'Liderazgo de ingeniería fraccional', kind: 'Compromiso continuo',
+      name: 'Liderazgo de ingeniería temporal', kind: 'Compromiso continuo',
       tagline: 'Orientación de ingeniería senior sin contratar a tiempo completo.',
       desc: 'Ayuda a tu equipo a tomar mejores decisiones técnicas, mejorar sus prácticas de entrega y avanzar con las iniciativas de producto.',
       bullets: [
@@ -50,7 +50,7 @@ export const packages = {
       ],
       price: 'Compromiso mensual',
       priceNote: 'Disponibilidad y alcance mensual definidos.',
-      cta: 'Hablemos de liderazgo fraccional', slug: 'liderazgo-tecnico-fraccional', projectIds: ['raffoom-platform', 'ui-library'],
+      cta: 'Cuéntame más', slug: 'liderazgo-tecnico-temporal', projectIds: ['raffoom-platform', 'ui-library'],
     },
   ] satisfies PackageTier[],
 };

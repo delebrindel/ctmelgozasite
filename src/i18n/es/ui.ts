@@ -81,7 +81,7 @@ export const ui: typeof EnUi = {
   },
   contact: {
     title: 'Contacta a un Consultor en Ingeniería de Software',
-    description: 'Solicita un diagnóstico técnico independiente, planea un sprint de modernización de sistemas legados o platica sobre liderazgo de ingeniería fraccional con Cristóbal Torres.',
+    description: 'Solicita un diagnóstico técnico independiente, planea un sprint de modernización de sistemas legados o platica sobre liderazgo de ingeniería temporal con Cristóbal Torres.',
     eyebrow: 'Inicia una conversación',
     h1: 'Cuéntame qué necesita tu software ahora.',
     intro: 'Comparte el reto, las personas involucradas y cómo se vería un resultado útil. Revisaré los detalles y te escribiré sobre un siguiente paso.',
