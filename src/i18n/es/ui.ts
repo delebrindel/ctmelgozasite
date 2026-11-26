@@ -19,6 +19,53 @@ export const ui: typeof EnUi = {
   footer: {
     cv: 'CV (PDF)',
     cvFile: 'CV_Cristobal_Torres.pdf',
+    privacy: 'Aviso de privacidad',
+    cookies: 'Configurar cookies',
+  },
+  consent: {
+    label: 'Consentimiento de cookies',
+    message: 'Este sitio usa cookies de Google Analytics para medir visitas. Permanecen desactivadas hasta que aceptes.',
+    policy: 'Aviso de privacidad',
+    accept: 'Aceptar',
+    reject: 'Rechazar',
+  },
+  privacy: {
+    title: 'Aviso de privacidad',
+    description: 'Cómo maneja este sitio tus datos: el formulario de contacto, Google Analytics y Google Fonts.',
+    eyebrow: 'Legal',
+    h1: 'Aviso de privacidad',
+    sections: [
+      {
+        heading: 'Responsable',
+        paragraphs: [
+          'Cristóbal Torres opera este sitio en ctorres.lat. Para preguntas sobre tus datos o para ejercer tus derechos, usa el formulario de contacto en /es/contacto/.',
+        ],
+      },
+      {
+        heading: 'Formulario de contacto',
+        paragraphs: [
+          'Al enviar el formulario de contacto, tu nombre, correo, tipo de proyecto, plazo, empresa (opcional), URL de tu aplicación (opcional) y mensaje se envían a Formspree, que me los entrega. Los uso para responder a tu solicitud.',
+        ],
+      },
+      {
+        heading: 'Analítica',
+        paragraphs: [
+          'Solo si aceptas, el sitio carga Google Tag Manager y Google Analytics, que colocan cookies para medir visitas. Si rechazas, no se carga ninguno. Puedes cambiar tu decisión en cualquier momento con "Configurar cookies" en el pie de página.',
+        ],
+      },
+      {
+        heading: 'Google Fonts',
+        paragraphs: [
+          'El sitio carga las tipografías Inter y JetBrains Mono desde Google Fonts. Tu navegador envía una solicitud a Google, que puede ver tu dirección IP.',
+        ],
+      },
+      {
+        heading: 'Tus derechos',
+        paragraphs: [
+          'Puedes pedir acceso, rectificación, cancelación u oposición al tratamiento de tus datos, y retirar tu consentimiento, a través del formulario de contacto.',
+        ],
+      },
+    ],
   },
   hero: {
     eyebrow: 'Consultoría en ingeniería de software · México · Remoto',
@@ -102,6 +149,11 @@ export const ui: typeof EnUi = {
     submit: 'Enviar detalles del proyecto',
     sending: 'Enviando…',
     note: 'Solo uso tus datos para responder a esta consulta.',
+    reassurance: [
+      'Respondo en un plazo de 3 días hábiles.',
+      'Empezamos con una llamada introductoria gratuita de 20 minutos.',
+      'Trabajo con clientes fuera de México.',
+    ],
     subject: 'Nueva consulta de proyecto desde ctorres.lat',
     subjectFrom: 'nueva consulta de',
     subjectDefault: 'Consulta',
@@ -122,6 +174,7 @@ export const ui: typeof EnUi = {
     homepage: 'página principal',
     focus: 'Enfoque del proyecto',
     wip: 'En progreso',
+    experimental: 'Experimental',
     technology: 'Tecnología:',
     source: 'Código fuente',
     public: 'Público',

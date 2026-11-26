@@ -1,0 +1,108 @@
+---
+import { localeOf, routes, t } from '../i18n';
+
+const locale = localeOf(Astro.currentLocale);
+const c = t(locale).ui.consent;
+---
+
+<div class="consent" id="consent" role="region" aria-label={c.label} hidden>
+  <p>{c.message} <a href={routes.privacy[locale]}>{c.policy}</a></p>
+  <div class="consent-actions">
+    <button type="button" data-consent="reject">{c.reject}</button>
+    <button type="button" data-consent="accept">{c.accept}</button>
+  </div>
+</div>
+
+<script>
+  const KEY = 'analytics-consent';
+  const w = window as Window & { loadAnalytics?: () => void; analyticsLoaded?: boolean };
+  const banner = document.getElementById('consent')!;
+
+  const read = (): string | null => {
+    try {
+      return localStorage.getItem(KEY);
+    } catch {
+      return null;
+    }
+  };
+  const write = (value: string | null) => {
+    try {
+      if (value === null) localStorage.removeItem(KEY);
+      else localStorage.setItem(KEY, value);
+    } catch {
+      /* storage blocked: the choice lasts only for this page view */
+    }
+  };
+
+  if (read() === 'accepted') w.loadAnalytics?.();
+  else if (read() === null) banner.hidden = false;
+
+  banner.addEventListener('click', (event) => {
+    const choice = (event.target as HTMLElement).closest<HTMLElement>('[data-consent]')?.dataset.consent;
+    if (!choice) return;
+    write(choice === 'accept' ? 'accepted' : 'rejected');
+    banner.hidden = true;
+    if (choice === 'accept') w.loadAnalytics?.();
+    // GTM is already running on this page after an accept; reload so rejecting stops it.
+    else if (w.analyticsLoaded) location.reload();
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-cookie-settings]').forEach((button) => {
+    button.addEventListener('click', () => {
+      write(null);
+      banner.hidden = false;
+      banner.querySelector<HTMLElement>('[data-consent="accept"]')?.focus();
+    });
+  });
+</script>
+
+<style>
+  .consent {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    padding: 16px 24px;
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    color: var(--text);
+    font-size: 14px;
+  }
+  .consent[hidden] {
+    display: none;
+  }
+  .consent p {
+    margin: 0;
+    max-width: 70ch;
+  }
+  .consent a {
+    color: var(--cyan);
+  }
+  .consent-actions {
+    display: flex;
+    gap: 8px;
+  }
+  .consent button {
+    font: inherit;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--cyan);
+    cursor: pointer;
+  }
+  .consent [data-consent='accept'] {
+    background: var(--cyan);
+    color: var(--bg);
+  }
+  .consent [data-consent='reject'] {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border);
+  }
+</style>

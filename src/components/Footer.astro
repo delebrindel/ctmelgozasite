@@ -1,7 +1,8 @@
 ---
-import { localeOf, t } from '../i18n';
+import { localeOf, routes, t } from '../i18n';
 
-const { site, ui } = t(localeOf(Astro.currentLocale));
+const locale = localeOf(Astro.currentLocale);
+const { site, ui } = t(locale);
 const year = new Date().getFullYear();
 // The previous site showed the first three social links in the footer.
 const footerSocial = site.social.slice(0, 3);
@@ -11,6 +12,8 @@ const footerSocial = site.social.slice(0, 3);
   <div class="wrap">
     <span class="copy">© {year} {site.name}</span>
     <a class="cv-link" href="/cv-cristobal-torres.pdf" download={ui.footer.cvFile}>{ui.footer.cv}</a>
+    <a class="cv-link" href={routes.privacy[locale]}>{ui.footer.privacy}</a>
+    <button type="button" class="cv-link footer-button" data-cookie-settings>{ui.footer.cookies}</button>
     <div class="social">
       {
         footerSocial.map((item) => (

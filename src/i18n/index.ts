@@ -37,6 +37,7 @@ export const routes = {
   contact: { en: '/contact/', es: '/es/contacto/' },
   blog: { en: '/blog/', es: '/es/blog/' },
   rss: { en: '/rss.xml', es: '/es/rss.xml' },
+  privacy: { en: '/privacy/', es: '/es/privacidad/' },
 } as const satisfies Record<string, Record<Locale, string>>;
 
 export function servicePath(locale: Locale, slug: string): string {

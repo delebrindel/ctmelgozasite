@@ -17,6 +17,53 @@ export const ui = {
   footer: {
     cv: 'CV (PDF)',
     cvFile: 'CV_Cristobal_Torres.pdf',
+    privacy: 'Privacy notice',
+    cookies: 'Cookie settings',
+  },
+  consent: {
+    label: 'Cookie consent',
+    message: 'This site uses Google Analytics cookies to measure visits. They stay off until you accept.',
+    policy: 'Privacy notice',
+    accept: 'Accept',
+    reject: 'Reject',
+  },
+  privacy: {
+    title: 'Privacy notice',
+    description: 'How this site handles your data: the contact form, Google Analytics, and Google Fonts.',
+    eyebrow: 'Legal',
+    h1: 'Privacy notice',
+    sections: [
+      {
+        heading: 'Who is responsible',
+        paragraphs: [
+          'Cristóbal Torres operates this site at ctorres.lat. To ask about your data or to exercise your rights, use the contact form at /contact/.',
+        ],
+      },
+      {
+        heading: 'Contact form',
+        paragraphs: [
+          'When you send the contact form, your name, email, engagement type, timeframe, company (optional), app URL (optional) and message go to Formspree, which delivers them to me. I use them to reply to your request.',
+        ],
+      },
+      {
+        heading: 'Analytics',
+        paragraphs: [
+          'Only if you accept, the site loads Google Tag Manager and Google Analytics, which set cookies to measure visits. If you reject, neither loads. You can change your choice at any time with Cookie settings in the footer.',
+        ],
+      },
+      {
+        heading: 'Google Fonts',
+        paragraphs: [
+          'The site loads the Inter and JetBrains Mono fonts from Google Fonts. Your browser sends a request to Google, which can see your IP address.',
+        ],
+      },
+      {
+        heading: 'Your rights',
+        paragraphs: [
+          'You can ask for access, correction, deletion or objection to the processing of your data, and withdraw your consent, through the contact form.',
+        ],
+      },
+    ],
   },
   hero: {
     eyebrow: 'Software engineering consultancy · Mexico · Remote',
@@ -100,6 +147,11 @@ export const ui = {
     submit: 'Send project details',
     sending: 'Sending…',
     note: 'I only use your details to reply to this enquiry.',
+    reassurance: [
+      'Reply within 3 business days.',
+      'Start with a free 20-minute intro call.',
+      'I work with clients outside Mexico.',
+    ],
     subject: 'New project enquiry from ctorres.lat',
     subjectFrom: 'new enquiry from',
     subjectDefault: 'Enquiry',
@@ -120,6 +172,7 @@ export const ui = {
     homepage: 'homepage',
     focus: 'Project focus',
     wip: 'WIP',
+    experimental: 'Experimental',
     technology: 'Technology:',
     source: 'Source',
     public: 'Public',

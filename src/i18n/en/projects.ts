@@ -17,7 +17,7 @@ export interface Project {
   github?: string;
   visibility?: 'public' | 'private';
   shotShape?: 'portrait' | 'landscape';
-  status: 'completed' | 'in-progress' | 'archived';
+  status: 'completed' | 'in-progress' | 'experimental' | 'archived';
 }
 
 export const projects: Project[] = [
@@ -135,11 +135,11 @@ export const projects: Project[] = [
     ],
     link: 'https://delebrindel.github.io/miso/',
     github: 'https://github.com/delebrindel/miso',
-    status: 'in-progress',
+    status: 'experimental',
   },
   {
     id: 'prompting-guidelines',
-    title: 'PromptingGuidelines',
+    title: 'AI Prompting Guidelines',
     description: 'Public steering files and reusable skills for Claude Code and OMP: architecture rules, git and security workflows, npm publishing, database migrations, accessibility reviews, and safe scratch cleanup.',
     categories: ['AI tooling', 'Developer experience'],
     stack: ['AI tooling', 'Developer experience'],
@@ -156,6 +156,29 @@ export const projects: Project[] = [
     technologies: ['Node.js', 'Docker', 'Shell', 'AWS'],
     outcome: 'Contributed to a modernization program that reduced deployment time from 120 to 30 minutes.',
     status: 'completed',
+  },
+  {
+    id: 'automation',
+    title: 'Mishka LoFi Studio',
+    description: 'Local pipeline that turns an idea into a finished release: song prompts, music generation with ACE-Step, mastering, an animated cover, and the final video, for single tracks and long playlists.',
+    categories: ['Music automation', 'Music production', 'Video rendering'],
+    stack: ['Music automation', 'Music production', 'Video rendering'],
+    technologies: ['Python', 'Gradio', 'ACE-Step', 'Demucs', 'FFmpeg'],
+    shotShape: 'landscape',
+    mobileShots: [
+      '/assets/projects/automation/02-cancion.webp',
+      '/assets/projects/automation/07-video.webp',
+    ],
+    gallery: [
+      { src: '/assets/projects/automation/01-idea.webp', caption: 'Idea: describe the track and generate the song prompts' },
+      { src: '/assets/projects/automation/02-cancion.webp', caption: 'Song: project, caption, lyrics, BPM and key, then generate the takes' },
+      { src: '/assets/projects/automation/03-master.webp', caption: 'Master: compare the chosen take before and after mastering' },
+      { src: '/assets/projects/automation/04-playlist.webp', caption: 'Playlist: every track mastered, with the take used in the mix' },
+      { src: '/assets/projects/automation/05-mix.webp', caption: 'Mix: crossfade or silence between tracks, fades and chapter timestamps' },
+      { src: '/assets/projects/automation/06-portada.webp', caption: 'Cover: upload the ChatGPT image, then animate it' },
+      { src: '/assets/projects/automation/07-video.webp', caption: 'Final video: the animated loop repeated for the full mix' },
+    ],
+    status: 'experimental',
   },
   {
     id: 'photography-site',

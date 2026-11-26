@@ -1,6 +1,13 @@
-<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-TC54BXS9"></script>
-<script>
+<!-- Google Tag Manager. Defines window.loadAnalytics; ConsentBanner calls it only after the visitor accepts. -->
+<script is:inline>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  window.loadAnalytics = function () {
+    if (window.analyticsLoaded) return;
+    window.analyticsLoaded = true;
+    window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-TC54BXS9';
+    document.head.appendChild(s);
+  };
 </script>

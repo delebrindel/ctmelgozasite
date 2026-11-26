@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { localeOf, routes, t } from '../i18n';
+
+const { ui } = t(localeOf(Astro.currentLocale));
+const p = ui.privacy;
+---
+
+<BaseLayout title={p.title} description={p.description} alternates={routes.privacy}>
+  <div class="page-head">
+    <p class="eyebrow">{p.eyebrow}</p>
+    <h1>{p.h1}</h1>
+  </div>
+  {
+    p.sections.map((section) => (
+      <section>
+        <h2>{section.heading}</h2>
+        {section.paragraphs.map((text) => <p>{text}</p>)}
+      </section>
+    ))
+  }
+</BaseLayout>

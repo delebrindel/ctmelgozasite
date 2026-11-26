@@ -12,7 +12,7 @@ type GroupKey = 'tools' | 'websites' | 'other';
 const groupIds: { key: Exclude<GroupKey, 'other'>; ids: string[] }[] = [
   {
     key: 'tools',
-    ids: ['spento', 'miso', 'prompting-guidelines', 'backoffice-system', 'ui-library', 'migration-tool'],
+    ids: ['spento', 'automation', 'prompting-guidelines', 'miso', 'backoffice-system', 'ui-library', 'migration-tool'],
   },
   {
     key: 'websites',
@@ -86,6 +86,7 @@ if (ungrouped.length > 0) groups.push({ key: 'other', title: p.groups.other, pro
             <div class="project-head">
               <h3>{project.title}</h3>
               {project.status === 'in-progress' && <span class="wip">{p.wip}</span>}
+              {project.status === 'experimental' && <span class="wip">{p.experimental}</span>}
             </div>
             <p class="desc">{project.description}</p>
             {project.outcome && <p class="outcome">{project.outcome}</p>}
