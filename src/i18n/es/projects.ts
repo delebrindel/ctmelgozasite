@@ -152,7 +152,7 @@ export const projects: Project[] = [
     gallery: [
       { src: '/assets/projects/automation/01-idea.webp', caption: 'Idea: describe la pista y genera los prompts de canción' },
       { src: '/assets/projects/automation/02-cancion.webp', caption: 'Canción: proyecto, caption, letra, BPM y tonalidad, y luego genera las tomas' },
-      { src: '/assets/projects/automation/03-master.webp', caption: 'Master: compara la toma elegida antes y después de masterizar' },
+      { src: '/assets/projects/automation/03-master.webp', caption: 'Master: compara la toma elegida antes y después de masterizar, revisa su afinación con el afinador y repinta cualquier tramo que se salga de tono' },
       { src: '/assets/projects/automation/04-playlist.webp', caption: 'Playlist: cada pista masterizada, con la toma que se usa en el mix' },
       { src: '/assets/projects/automation/05-mix.webp', caption: 'Mix: crossfade o silencio entre pistas, fades y capítulos' },
       { src: '/assets/projects/automation/06-portada.webp', caption: 'Portada: sube la imagen de ChatGPT y luego anímala' },

@@ -172,7 +172,7 @@ export const projects: Project[] = [
     gallery: [
       { src: '/assets/projects/automation/01-idea.webp', caption: 'Idea: describe the track and generate the song prompts' },
       { src: '/assets/projects/automation/02-cancion.webp', caption: 'Song: project, caption, lyrics, BPM and key, then generate the takes' },
-      { src: '/assets/projects/automation/03-master.webp', caption: 'Master: compare the chosen take before and after mastering' },
+      { src: '/assets/projects/automation/03-master.webp', caption: 'Master: compare the chosen take before and after mastering, check its pitch with the tuner, and repaint any section that drifts off key' },
       { src: '/assets/projects/automation/04-playlist.webp', caption: 'Playlist: every track mastered, with the take used in the mix' },
       { src: '/assets/projects/automation/05-mix.webp', caption: 'Mix: crossfade or silence between tracks, fades and chapter timestamps' },
       { src: '/assets/projects/automation/06-portada.webp', caption: 'Cover: upload the ChatGPT image, then animate it' },

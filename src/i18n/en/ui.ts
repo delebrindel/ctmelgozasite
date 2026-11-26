@@ -42,7 +42,7 @@ export const ui = {
       {
         heading: 'Contact form',
         paragraphs: [
-          'When you send the contact form, your name, email, engagement type, timeframe, company (optional), app URL (optional) and message go to Formspree, which delivers them to me. I use them to reply to your request.',
+          'When you send the contact form, your name, email, engagement type, timeframe, company (optional), app URL (optional) and message go to Formspree, which delivers them to me. I use them only to reply to your request, and I keep them for 365 days.',
         ],
       },
       {

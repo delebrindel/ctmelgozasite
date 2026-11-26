@@ -44,7 +44,7 @@ export const ui: typeof EnUi = {
       {
         heading: 'Formulario de contacto',
         paragraphs: [
-          'Al enviar el formulario de contacto, tu nombre, correo, tipo de proyecto, plazo, empresa (opcional), URL de tu aplicación (opcional) y mensaje se envían a Formspree, que me los entrega. Los uso para responder a tu solicitud.',
+          'Al enviar el formulario de contacto, tu nombre, correo, tipo de proyecto, plazo, empresa (opcional), URL de tu aplicación (opcional) y mensaje se envían a Formspree, que me los entrega. Los uso solo para responder a tu solicitud y los conservo durante 365 días.',
         ],
       },
       {
