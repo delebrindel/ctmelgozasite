@@ -8,10 +8,10 @@ import Approach from '../components/home/Approach.astro';
 import FeaturedWork from '../components/home/FeaturedWork.astro';
 import ClosingCta from '../components/home/ClosingCta.astro';
 import Insights from '../components/home/Insights.astro';
-import { localeOf, postLocale, routes, t } from '../i18n';
+import { localeOf, postLocale, routes, servicePath, t } from '../i18n';
 
 const locale = localeOf(Astro.currentLocale);
-const { site, ui } = t(locale);
+const { site, ui, packages } = t(locale);
 
 const latestPosts = (await getCollection('blog', (entry) => !entry.data.draft && postLocale(entry.id) === locale))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -23,8 +23,21 @@ const homeLd = {
   name: `${site.name}, ${ui.home.schemaName}`,
   url: site.url,
   description: site.description,
+  image: new URL('/profile.jpg', site.url).href,
   address: { '@type': 'PostalAddress', addressCountry: 'MX' },
+  areaServed: 'Worldwide',
   founder: { '@type': 'Person', name: site.name },
+  sameAs: site.social.map((item) => item.href),
+  makesOffer: packages.tiers.map((tier) => ({
+    '@type': 'Offer',
+    ...(tier.offer ? { price: tier.offer.amount, priceCurrency: tier.offer.currency } : {}),
+    itemOffered: {
+      '@type': 'Service',
+      name: tier.name,
+      description: tier.desc,
+      url: new URL(servicePath(locale, tier.slug), site.url).href,
+    },
+  })),
 };
 ---
 

@@ -98,7 +98,7 @@ export const projects: Project[] = [
     categories: ['Platform engineering', 'Customer-facing web apps', 'CMS'],
     stack: ['Platform engineering', 'Customer-facing web apps', 'CMS'],
     technologies: ['React', 'Node.js', 'PHP', 'Microservices'],
-    outcome: 'Supported 7 companies across 4 customer-facing raffle websites.',
+    outcome: 'As Technical Lead of a 4-developer team, I architected it from scratch; it serves 7 companies across 4 raffle websites.',
     image: '/assets/projects/raffoom-platform.jpg',
     link: 'https://www.raffoom.com/',
     status: 'completed',
@@ -154,7 +154,7 @@ export const projects: Project[] = [
     categories: ['Legacy modernization', 'Developer tooling', 'Platform reliability'],
     stack: ['Legacy modernization', 'Developer tooling', 'Platform reliability'],
     technologies: ['Node.js', 'Docker', 'Shell', 'AWS'],
-    outcome: 'Contributed to a modernization program that reduced deployment time from 120 to 30 minutes.',
+    outcome: 'Part of the modernization I led as Technical Lead, which cut deployment time from 120 to 30 minutes.',
     status: 'completed',
   },
   {

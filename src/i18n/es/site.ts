@@ -1,7 +1,7 @@
 export const site = {
   name: 'Cristóbal Torres',
   url: 'https://ctorres.lat',
-  description: 'Consultora de ingeniería de software liderada por Cristóbal Torres en México. Moderniza software legado y construye herramientas internas con ingeniería senior y práctica directa.',
+  description: 'Consultoría de ingeniería de software dirigida por Cristóbal Torres en México. Moderniza software legado y construye herramientas internas con ingeniería senior y práctica directa.',
   intro: 'Ayudo a equipos de producto a modernizar software legado y a construir herramientas internas, con un plan práctico e ingeniería senior con las manos en el código.',
   background: 'Con base en México, trabajando con equipos internacionales.',
   links: {

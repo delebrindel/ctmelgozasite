@@ -78,7 +78,7 @@ export const projects: Project[] = [
     categories: ['Ingeniería de plataformas', 'Apps web para clientes', 'CMS'],
     stack: ['Ingeniería de plataformas', 'Apps web para clientes', 'CMS'],
     technologies: ['React', 'Node.js', 'PHP', 'Microservices'],
-    outcome: 'Dio soporte a 7 empresas a través de 4 sitios de rifas orientados al cliente.',
+    outcome: 'Como Technical Lead de un equipo de 4 desarrolladores, la diseñé desde cero; atiende a 7 empresas en 4 sitios de rifas.',
     image: '/assets/projects/raffoom-platform.jpg',
     link: 'https://www.raffoom.com/',
     status: 'completed',
@@ -134,7 +134,7 @@ export const projects: Project[] = [
     categories: ['Modernización de legados', 'Herramientas para desarrolladores', 'Confiabilidad de plataformas'],
     stack: ['Modernización de legados', 'Herramientas para desarrolladores', 'Confiabilidad de plataformas'],
     technologies: ['Node.js', 'Docker', 'Shell', 'AWS'],
-    outcome: 'Contribuyó a un programa de modernización que redujo el tiempo de despliegue de 120 a 30 minutos.',
+    outcome: 'Parte de la modernización que lideré como Technical Lead, que redujo el tiempo de despliegue de 120 a 30 minutos.',
     status: 'completed',
   },
   {

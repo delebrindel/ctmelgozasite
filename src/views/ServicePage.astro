@@ -55,6 +55,49 @@ const serviceLd = {
       </ul>
     </div>
 
+    {tier.audience && (
+      <div class="service-detail">
+        <h2>{c.audience}</h2>
+        <ul class="service-list">{tier.audience.map((item) => <li>{item}</li>)}</ul>
+      </div>
+    )}
+
+    {tier.steps && (
+      <div class="service-detail">
+        <h2>{c.steps}</h2>
+        <ol class="service-steps">{tier.steps.map((step) => <li>{step}</li>)}</ol>
+      </div>
+    )}
+
+    {(tier.needs || tier.duration) && (
+      <div class="service-detail service-columns">
+        {tier.needs && (
+          <div>
+            <h2>{c.needs}</h2>
+            <ul class="service-list">{tier.needs.map((item) => <li>{item}</li>)}</ul>
+          </div>
+        )}
+        {tier.duration && (
+          <div>
+            <h2>{c.duration}</h2>
+            <p>{tier.duration}</p>
+          </div>
+        )}
+      </div>
+    )}
+
+    {tier.faq && (
+      <div class="service-detail">
+        <h2>{c.faq}</h2>
+        {tier.faq.map((item) => (
+          <details class="service-faq">
+            <summary>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+    )}
+
     {related.length > 0 && (
       <section class="service-related">
         <h2>{c.related}</h2>
@@ -91,4 +134,13 @@ const serviceLd = {
   .service-list { list-style: none; padding: 0; margin: 1rem 0 0; }
   .service-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
   .service-list li::before { content: "• "; color: var(--purple); }
+  .service-steps { margin: 1rem 0 0; padding-left: 1.5rem; }
+  .service-steps li { padding: 0.5rem 0; }
+  .service-steps li::marker { color: var(--cyan); font-family: var(--mono); }
+  .service-columns { display: grid; gap: 2rem; }
+  @media (min-width: 768px) { .service-columns { grid-template-columns: 1.4fr 1fr; } }
+  .service-columns h2 { margin-top: 0; }
+  .service-faq { border-bottom: 1px solid var(--border); padding: 0.75rem 0; }
+  .service-faq summary { cursor: pointer; font-weight: 600; color: var(--white); }
+  .service-faq p { margin: 0.5rem 0 0; color: var(--muted); }
 </style>

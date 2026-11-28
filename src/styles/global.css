@@ -409,21 +409,11 @@ section {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  order: 2;
-}
-
-.photo-wrap {
   order: 1;
 }
 
-@media (min-width: 1024px) {
-  .hero-text {
-    order: 1;
-  }
-
-  .photo-wrap {
-    order: 2;
-  }
+.photo-wrap {
+  order: 2;
 }
 
 .hero h1 {

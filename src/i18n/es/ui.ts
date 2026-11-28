@@ -123,6 +123,11 @@ export const ui: typeof EnUi = {
     back: '← Todos los servicios',
     included: 'Qué incluye',
     related: 'Trabajo relacionado',
+    audience: 'Es para ti si',
+    steps: 'Cómo funciona',
+    needs: 'Qué necesito de tu equipo',
+    duration: 'Duración',
+    faq: 'Preguntas frecuentes',
     next: 'Siguiente paso',
     heading: 'Cuéntame qué necesita cambiar.',
     body: 'Comparte el sistema, las restricciones y el resultado que necesitas. Te responderé con una forma práctica de empezar.',
@@ -150,7 +155,7 @@ export const ui: typeof EnUi = {
     sending: 'Enviando…',
     note: 'Solo uso tus datos para responder a esta consulta.',
     reassurance: [
-      'Respondo en un plazo de 3 días hábiles.',
+      'Respondo en 1 día hábil.',
       'Empezamos con una llamada introductoria gratuita de 20 minutos.',
       'Trabajo con clientes fuera de México.',
     ],
@@ -163,7 +168,7 @@ export const ui: typeof EnUi = {
     linkedin: 'LinkedIn',
   },
   portfolio: {
-    title: 'Casos de estudio de Ingeniería de Software',
+    title: 'Portafolio de Ingeniería de Software',
     description: 'Trabajo seleccionado de ingeniería de software de Cristóbal Torres: migraciones de plataformas legadas, herramientas internas y aplicaciones web en producción.',
     h1: 'Portafolio',
     intro: 'Ejemplos de modernización de plataformas, herramientas internas e ingeniería de producto. Parte del trabajo con clientes es confidencial, así que estos resúmenes se enfocan en los retos de ingeniería y los resultados que sí puedo compartir.',
@@ -225,7 +230,7 @@ export const ui: typeof EnUi = {
     schemaName: 'Consultoría en Ingeniería de Software',
   },
   layout: {
-    jobTitle: 'Desarrollador full stack senior y líder técnico',
+    jobTitle: 'Consultor en Ingeniería de Software',
     imageAlt: 'consultor de ingeniería de software',
   },
   dateLocale: 'es-MX',

@@ -121,6 +121,11 @@ export const ui = {
     back: '← All services',
     included: 'What’s included',
     related: 'Related work',
+    audience: 'This is for you if',
+    steps: 'How it works',
+    needs: 'What I need from your team',
+    duration: 'Timeline',
+    faq: 'Frequently asked questions',
     next: 'Next step',
     heading: 'Tell me what needs to change.',
     body: 'Share the system, the constraints, and the outcome you need. I’ll reply with a practical way to start.',
@@ -148,7 +153,7 @@ export const ui = {
     sending: 'Sending…',
     note: 'I only use your details to reply to this enquiry.',
     reassurance: [
-      'Reply within 3 business days.',
+      'Reply within 1 business day.',
       'Start with a free 20-minute intro call.',
       'I work with clients outside Mexico.',
     ],
@@ -161,7 +166,7 @@ export const ui = {
     linkedin: 'LinkedIn',
   },
   portfolio: {
-    title: 'Software Engineering Case Studies',
+    title: 'Software Engineering Portfolio',
     description: 'Selected software engineering work by Cristóbal Torres: legacy platform migrations, internal tools, and production web applications.',
     h1: 'Portfolio',
     intro: 'Examples of platform modernization, internal tooling, and product engineering. Some client work is confidential, so these summaries focus on the engineering challenges and outcomes I can share.',
@@ -223,7 +228,7 @@ export const ui = {
     schemaName: 'Software Engineering Consultancy',
   },
   layout: {
-    jobTitle: 'Senior Full Stack Developer and Technical Lead',
+    jobTitle: 'Software Engineering Consultant',
     imageAlt: 'software engineering consultant',
   },
   dateLocale: 'en-US',

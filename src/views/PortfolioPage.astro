@@ -16,7 +16,7 @@ const groupIds: { key: Exclude<GroupKey, 'other'>; ids: string[] }[] = [
   },
   {
     key: 'tools',
-    ids: ['spento', 'automation', 'prompting-guidelines', 'miso', 'backoffice-system', 'ui-library', 'migration-tool'],
+    ids: ['migration-tool', 'backoffice-system', 'ui-library', 'miso', 'prompting-guidelines', 'spento', 'automation'],
   },
 ];
 
@@ -67,9 +67,10 @@ if (ungrouped.length > 0) groups.push({ key: 'other', title: p.groups.other, pro
           </div>
           {project.mobileShots && project.mobileShots.length > 0 ? (
             <div class="project-shots" data-shape={project.shotShape ?? 'portrait'} data-gallery={project.gallery ? JSON.stringify(project.gallery) : undefined} data-title={project.title}>
-              {project.mobileShots.map((src) => {
+              {project.mobileShots.map((src, n) => {
                 const index = project.gallery ? project.gallery.findIndex((item) => item.src === src) : -1;
-                const img = <img src={src} alt={`${project.title} ${p.screen}`} width="390" height="844" loading="lazy" decoding="async" />;
+                const alt = index >= 0 ? `${project.title}: ${project.gallery![index].caption}` : `${project.title} ${p.screen} ${n + 1}`;
+                const img = <img src={src} alt={alt} width="390" height="844" loading="lazy" decoding="async" />;
                 return index >= 0 ? (
                   <button type="button" class="phone" data-index={index} aria-label={`${project.title}: ${p.viewFull}`}>{img}</button>
                 ) : (
