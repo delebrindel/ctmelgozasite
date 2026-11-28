@@ -171,4 +171,15 @@ export const projects: Project[] = [
     link: 'https://photo.ctorres.lat/',
     status: 'completed',
   },
+  {
+    id: 'selqet',
+    visibility: 'public',
+    title: 'Sitio web de Selqet, compañía de danza',
+    description: 'Sitio web de una compañía de danza fusión de Hermosillo, Sonora, con su repertorio, la obra destacada Septem, trayectoria, cuerpo de baile, videos y un contacto de programación para festivales y recintos.',
+    categories: ['Sitio de artes escénicas', 'Perfil de compañía', 'Contacto de programación'],
+    stack: ['Sitio de artes escénicas', 'Perfil de compañía', 'Contacto de programación'],
+    image: '/assets/projects/selqet.jpg',
+    link: 'https://selqet.com/',
+    status: 'completed',
+  },
 ];

@@ -191,4 +191,15 @@ export const projects: Project[] = [
     link: 'https://photo.ctorres.lat/',
     status: 'completed',
   },
+  {
+    id: 'selqet',
+    visibility: 'public',
+    title: 'Selqet Dance Company Website',
+    description: 'Website for a fusion dance company from Hermosillo, Sonora, presenting its repertoire, featured piece Septem, company history, dancers, videos, and a booking contact for festivals and venues.',
+    categories: ['Performing arts website', 'Company profile', 'Booking contact'],
+    stack: ['Performing arts website', 'Company profile', 'Booking contact'],
+    image: '/assets/projects/selqet.jpg',
+    link: 'https://selqet.com/',
+    status: 'completed',
+  },
 ];
