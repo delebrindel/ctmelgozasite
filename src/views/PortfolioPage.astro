@@ -11,12 +11,12 @@ type GroupKey = 'tools' | 'websites' | 'other';
 // Group keys are stable across languages; the filter chips and sections use them.
 const groupIds: { key: Exclude<GroupKey, 'other'>; ids: string[] }[] = [
   {
-    key: 'tools',
-    ids: ['spento', 'automation', 'prompting-guidelines', 'miso', 'backoffice-system', 'ui-library', 'migration-tool'],
-  },
-  {
     key: 'websites',
     ids: ['selqet', 'photography-site', 'sanders-mantilla', 'raffoom-platform', 'red-consultores', 'plapers'],
+  },
+  {
+    key: 'tools',
+    ids: ['spento', 'automation', 'prompting-guidelines', 'miso', 'backoffice-system', 'ui-library', 'migration-tool'],
   },
 ];
 
